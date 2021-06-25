@@ -1,0 +1,422 @@
+options{
+        IGNORE_CASE=true ;
+        //DEBUG_PARSER=true;
+        //DEBUG_LOOKAHEAD=true;
+        //DEBUG_TOKEN_MANAGER=true;
+    }
+
+PARSER_BEGIN(compilador)
+
+	import java.util.Enumeration;
+	import java.util.Hashtable;
+	import java.util.Stack;
+
+	public class compilador {
+
+		static Hashtable contenedor = new Hashtable();
+		static String ArrayTemp [] = new String [6];
+		static Stack var = new Stack();
+		static Stack cadena = new Stack();
+
+		public static void main(String args[]) throws ParseException {
+			compilador analizador = new compilador(System.in);
+			analizador.Inicio();
+			Enumeration enumeration = contenedor.elements();
+			while (enumeration.hasMoreElements()) {
+				Stack resultados = new Stack();
+				String resultadosSt [] = new String [6];
+				resultados = (Stack) enumeration.nextElement();
+				for(int i = 0; i < resultados.size()+1; i++){
+					resultadosSt = (String[]) resultados.pop();
+				System.out.print("hashtable valores: " + resultadosSt[0]+"  \t"+resultadosSt[1]+"\t\t\t"+resultadosSt[2]);
+				System.out.println("\t"+resultadosSt[3]+"\t"+resultadosSt[4]+"\t"+resultadosSt[5]);
+				}
+			}
+		}
+
+		public static void GenerarHash(String Id[]){
+			//System.out.print("Tipo = "+Id[0]+" Id = "+Id[1]);
+			//System.out.print(" Estructura = "+Id[2]+"Valor = "+Id[3]);
+			//System.out.println(" Tamano = "+Id[4]+"Posicion = "+Id[5]);
+            int nL = Id[1].length();
+            Stack pilatemp = new Stack();
+            Stack pilacontrol = new Stack();
+            int clave = 0;
+            for(int i = 0; i < nL ; i++){   
+                char character = Id[1].charAt(i); // start on the first character
+                int ascii = (int) character; //convert the first character
+                clave = clave+ascii; 
+            }
+            //System.out.println("clave = "+clave);
+            pilatemp = (Stack) contenedor.get(clave);
+            boolean pilavacia = pilatemp == null;
+            
+            if(!pilavacia){
+                pilacontrol = (Stack) contenedor.get(clave);
+                //System.out.println("---------> 1");
+                //System.out.println("pilacontrol = "+pilacontrol.size()+" pilatemp = "+pilatemp.size());
+                for (int i = 0; i < pilacontrol.size(); i++) {
+                    String dato[] = (String []) pilacontrol.elementAt(i);
+                    if(dato[1] == Id[1]){
+                        System.out.println("**Error variable ya declarada**");
+                        break;
+                    }else{ 
+                        pilacontrol.push(Id);
+                        contenedor.put(clave, pilacontrol);
+                        //System.out.println("---------> 1 --------> 2");
+                        break;
+                    }
+                }
+            }else{
+                //System.out.println("---------> 2");
+                pilacontrol.push(Id);
+                contenedor.put(clave, pilacontrol);
+            }
+
+			for (int i = 0; i < ArrayTemp.length; i++) {
+				ArrayTemp[i]="";
+			}
+
+        }
+
+		public static void DescargarPila(){
+			System.out.println("");
+			System.out.println("<------->");
+
+			String acumuladorDatos = "";
+			while(!var.isEmpty()){
+				acumuladorDatos = var.pop() + acumuladorDatos;
+			}
+			System.out.println(acumuladorDatos+";");
+		}
+
+		public static void DescargarPilaCadena(){
+			//System.out.println("");
+			//System.out.println("<------->");
+
+			String acumuladorDatos[] = new String [6];
+			acumuladorDatos[5] = (String) cadena.pop();
+			acumuladorDatos[4] = (String) cadena.pop();
+			acumuladorDatos[2] = (String) cadena.pop();
+			acumuladorDatos[1] = (String) cadena.pop();
+			acumuladorDatos[0] = (String) cadena.pop();
+
+			while(!var.isEmpty()){
+				var.pop();
+			}
+			GenerarHash(acumuladorDatos);
+			/*System.out.print("Tipo = "+acumuladorDatos[0]+"\tId = "+acumuladorDatos[1]);
+			System.out.print("\tEstructura = "+acumuladorDatos[2]+"\tValor = "+acumuladorDatos[3]);
+			System.out.println("\tTamano = "+acumuladorDatos[4]+"\tPosicion = "+acumuladorDatos[5]);*/
+		}
+
+	}
+
+PARSER_END(compilador)
+
+SKIP : { " "| "\t"| "\n"| "\r"}
+SKIP:{<"/*">:Comentario_Muchos}
+ <Comentario_Muchos> SKIP:
+ {"*/" {System.out.println("Encontre un comentario de muchas lineas");}:DEFAULT}
+ <Comentario_Muchos>MORE:
+ {<~[]> }
+SKIP:{ <"//">:Comentario_Uno }
+ <Comentario_Uno> 
+SKIP:{ "\n" {System.out.println("Encontre un comentario de una linea");}:DEFAULT}
+ <Comentario_Uno>
+MORE:{ <~[]> }
+
+TOKEN :{< Res_real: "real" >}
+TOKEN :{< Res_int: "int" >}
+TOKEN :{< Res_float: "float" > }
+TOKEN :{< Res_else: "else" >}
+TOKEN :{< Res_if: "if" >}
+TOKEN :{< Res_return: "return" >}
+TOKEN :{< Res_void: "void" >}
+TOKEN :{< Res_while: "while" >}
+
+TOKEN :{< Op_Suma: "+" >}
+TOKEN :{< Op_Resta: "-" >}
+TOKEN :{< Op_Mult: "*" >}
+TOKEN :{< Op_Div: "/" >}
+
+TOKEN :{< Op_Menor: "<" >}
+TOKEN :{< Op_Mayor: ">" >}
+TOKEN :{< Op_Menor_Igual: "<=" >}
+TOKEN :{< Op_Mayor_Igual: ">=" >}
+TOKEN :{< Op_Diferente: "!=" >}
+TOKEN :{< Op_Asignacion: "=" >}
+TOKEN :{< Op_Doble_Igual: "==" >}
+TOKEN :{< Op_Punto_Coma: ";" >}
+TOKEN :{< Op_Coma: "," >}
+
+TOKEN :{< Op_Parentesis_Izq: "(" >}
+TOKEN :{< Op_Parentesis_Der: ")" >}
+TOKEN :{< Op_Corchete_Izq: "[" >}
+TOKEN :{< Op_Corchete_Der: "]" >}
+TOKEN :{< Op_Llave_Izq: "{" >}
+TOKEN :{< Op_Llave_Der: "}" >}
+
+TOKEN:{< Num_Entero: ["1"-"9"](["0"-"9"])*|"0"> }
+TOKEN:{< Num_Entero_Invalido: "0"(["0"-"9"])+ > }
+TOKEN:{< Num_Decimal: ["1"-"9"](["0"-"9"])*"."(["0"-"9"])+ | "0."(["0"-"9"])+ > }
+TOKEN:{< Num_Decimal_Invalido: (["a"-"z","A"-"Z","0"-"9"])+"."(["a"-"z","A"-"Z","0"-"9"])+ | (["a"-"z","A"-"Z","0"-"9"])+"." | "."(["a"-"z","A"-"Z","0"-"9"])+ | ["1"-"9"](["0"-"9"])*"." | "."(["0"-"9"])+ >}
+
+TOKEN:{< Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >}
+TOKEN:{<Id_Invalido: (["0"-"9"])+( ["a"-"z","A"-"Z","0"-"9"] )+>}
+TOKEN :{< Id_Desc_inv: "|"<Id> >}
+
+SPECIAL_TOKEN:{< NoValido: ~[] >}
+
+void Inicio() :{}
+{
+	( program() ) + <EOF>{}
+}
+
+//---1
+void program() :{}		
+{	
+	declaration_list()					
+}
+
+//---2---------------------recursividad a la izquierda
+void declaration_list() :{}	{	declaration() declaration_list_P()							}	
+void declaration_list_P() :{}	{	( LOOKAHEAD(2) declaration() declaration_list_P() )*					}
+
+//---3
+void declaration() :{}		
+{	   LOOKAHEAD(3)  var_declaration(){ cadena.push("Global"); DescargarPilaCadena(); } 
+		|  
+		fun_declaration() { cadena.push("Clase"); DescargarPilaCadena(); }									
+}
+
+//---4
+void var_declaration() :{}	
+{	
+	type_specifier() {cadena.push(token.image);} 
+	<Id> { cadena.push(token.image); } 
+	var_declaration_P()						
+}
+void var_declaration_P() :{}	
+{	  
+	<Op_Punto_Coma> { cadena.push("Varible"); cadena.push("1"); }
+	| 
+	<Op_Corchete_Izq> <Num_Entero>{ cadena.push("Arreglo"); cadena.push(token.image); } <Op_Corchete_Der> <Op_Punto_Coma> 			
+}
+
+//---5
+void type_specifier() :{}	
+{	  
+	<Res_int> 
+	| 
+	<Res_void>
+	|
+	<Res_real>										
+}
+
+//---6
+void fun_declaration() :{}	
+{	
+	type_specifier() {  cadena.push(token.image); } 
+	<Id> { cadena.push(token.image);  cadena.push("Funcion"); cadena.push("1");} 
+	<Op_Parentesis_Izq> params() <Op_Parentesis_Der> compound_stmt()  
+}
+
+//---7
+void params() :{}		
+{ 	  
+	LOOKAHEAD(2) param_list() 
+	| 
+	<Res_void>										
+}
+
+//---8---------------------recursividad a la izquierda
+void param_list() :{} 		
+{	
+	param() param_list_P()									
+} 
+void param_list_P() :{} 	
+{	
+	( LOOKAHEAD(2) <Op_Coma> param() param_list_P() )*					
+} 
+
+//---9
+void param() :{}		
+{	
+	type_specifier() { cadena.push(token.image);} 
+	<Id> { cadena.push(token.image); } 
+	param_P() {
+		if(token.image == null){cadena.push("Varible"); cadena.push("1");}
+		else{cadena.push("Arreglo"); cadena.push("-");}  
+		cadena.push("Local"); DescargarPilaCadena();
+		}								
+} 
+void param_P() :{} 		{	( <Op_Corchete_Izq> <Op_Corchete_Der> )*						} 
+
+//---10
+void compound_stmt() :{} 	{	<Op_Llave_Izq> local_declarations() statement_list() <Op_Llave_Der> 			} 
+
+//---11---------------------recursividad a la izquierda
+void local_declarations() :{} 	{	local_declaration_P()									   } 
+void local_declaration_P() :{} 	
+{	
+	( LOOKAHEAD(2) var_declaration() { cadena.push("Local"); DescargarPilaCadena(); }
+	local_declaration_P() )*  
+	} 
+
+//---12
+void statement_list() :{} 	{	statement_list_P() 									    }  
+void statement_list_P() :{} 	{	( LOOKAHEAD(2) statement() statement_list_P() )*	} 
+
+//---13
+void statement() :{} 		
+{	  
+	expression_stmt() 
+	| compound_stmt() 
+	| selection_stmt() 
+	| iteration_stmt() 
+	| return_stmt() 									
+} 
+
+//---14
+void expression_stmt() :{}	
+{	  
+	expression() <Op_Punto_Coma>
+	| <Op_Punto_Coma> 									
+} 
+
+//---15
+void selection_stmt() :{} 	
+{	
+	<Res_if> <Op_Parentesis_Izq> 
+	expression() { DescargarPila(); System.out.println("<--------->"); System.out.println("");}
+	<Op_Parentesis_Der> statement() selection_stmt_P() 
+} 
+void selection_stmt_P() :{} 	{	( LOOKAHEAD(2) <Res_else> statement() )*						} 
+
+//---16
+void iteration_stmt() :{} 	
+{	
+	<Res_while> <Op_Parentesis_Izq> 
+	expression() { DescargarPila(); System.out.println("<--------->"); System.out.println("");}
+	<Op_Parentesis_Der> statement()		
+} 
+
+//---17
+void return_stmt() :{} 		{	<Res_return> return_stmt_P()								}
+void return_stmt_P() :{} 	
+{	 
+	<Op_Punto_Coma>
+	| expression() <Op_Punto_Coma> 							
+}
+
+//---18->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+void expression() :{ /*System.out.println("---> funcion expression <---");*/ } 		
+{	  
+	LOOKAHEAD(8) var(){  }
+	<Op_Asignacion> { var.push(token.image); }
+	expression()     { DescargarPila(); System.out.println("<--------->\n"); }		
+	| simple_expression() 									
+}
+
+//---19--------------------------------------------------------------------------------------------------------
+void var() :{ /*System.out.println("---> funcion variable <---");*/ } 			
+{	
+	<Id>{ var.push(token.image); } var_P()									
+}
+void var_P() :{} 		
+{	
+	( LOOKAHEAD(2) <Op_Corchete_Izq>{ var.push(token.image); } 
+	expression() {  }
+	<Op_Corchete_Der>{ var.push(token.image); } )*			
+} 
+//------------------------------------------------------------------------------------------------------------
+
+//---20
+void simple_expression() :{}	{	additive_expression() simple_expression_P()						}
+void simple_expression_P() :{}	
+{	
+	( LOOKAHEAD(2) relop(){ var.push(token.image); } additive_expression() )*						
+}
+
+//---21				
+void relop() :{} 		
+{	  
+	<Op_Menor_Igual> 
+	| <Op_Menor> 
+	| <Op_Mayor>  
+	| <Op_Mayor_Igual> 
+	| <Op_Doble_Igual> 
+	| <Op_Diferente>									
+}
+
+//---22---------------------recursividad a la izquierda
+void additive_expression() :{} 	
+{	
+	term() additive_expression_P() 								
+}
+void additive_expression_P() :{}
+{	
+	( LOOKAHEAD(2) addop(){ var.push(token.image); } term() additive_expression_P() )*				
+}
+
+//---23
+void addop() :{}{	<Op_Suma> | <Op_Resta>									}
+
+//---24---------------------recursividad a la izquierda>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+void term() :{ /*System.out.println("---> funcion term <---");*/ } 		
+{	
+	factor(){  } 
+	term_P() {  }								
+}
+void term_P() :{ /*System.out.println("---> funcion term_P <---");*/ } 		
+{	
+	( LOOKAHEAD(2) mulop(){ var.push(token.image); } 
+	factor(){  } 
+	term_P() )*						
+}
+//---------------------------------------------------------------------------------------------------------------------------------
+
+//---25
+void mulop() :{} {	<Op_Mult> | <Op_Div> 									}
+
+//---26
+void factor() :{ /*System.out.println("---> funcion factor <---");*/ } 		
+{	  
+	<Op_Parentesis_Izq> expression() <Op_Parentesis_Der> 	 
+	| <Num_Entero>  { var.push(token.image); }	    
+	| <Num_Decimal>	{ var.push(token.image); }
+	| LOOKAHEAD(2) call()
+	| var()										
+}
+
+//---27
+void call() :{} 		{	<Id> <Op_Parentesis_Izq> args() <Op_Parentesis_Der>					}
+
+//---28
+void args() :{} 		{	( arg_list() )*										}
+
+//---29---------------------recursividad a la izquierda
+void arg_list() :{} 		{	expression() arg_list_P()								}
+void arg_list_P() :{} 		{	( LOOKAHEAD(2) <Op_Coma> expression() arg_list_P() )*					}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
