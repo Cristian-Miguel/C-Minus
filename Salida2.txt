@@ -5,68 +5,120 @@ Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Loca
 Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  x == x  <-----------------
-		**Error variable x ya declarada**
+		**Error variable "x" ya declarada**
 Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  k = low;
-int - k - Varible - null - 1 - Local
-^^^  low  ^^^
-  base = low
-  int == int
-  comparacion == 0
-  	Estructura = Varible posicion = 2
-  variable
-  2 == 0
-  posicion = 2
-  posicion = 4 comparacion = 2
 <--------->
 
 
 <------->
  x = a [ low ];
-int - x - Arreglo - null - 10 - Global
 **Error la variable x no es compatible**
 <--------->
 
 
 <------->
  i = low + 1;
-int - i - Varible - null - 1 - Local
-^^^  low  ^^^
-  base = low
-  int == int
-  comparacion == 0
-  	Estructura = Varible posicion = 2
-  variable
-  2 == 0
-  posicion = 2
-  posicion = 4 comparacion = 2
-  base = 1
 <--------->
 
 
 <------->
  i < high;
-int - i - Varible - null - 1 - Local
-^^^  high  ^^^
-  base = high
-  int == int
-  comparacion == 0
-  	Estructura = Varible posicion = 2
-  variable
-  2 == 0
-  posicion = 2
-  posicion = 4 comparacion = 2
 <--------->
 
 
 <------->
  a [ i ] < x;
-int - a - Arreglo - null - - - Local
-^^^  x  ^^^
-  base = x
-  int == int
-  comparacion == 0
-  	Estructura = Arreglo posicion = 5
+**Error variable x no compatible**
+<--------->
+
+
+<------->
+ x = a [ i ];
+**Error la variable x no es compatible**
+<--------->
+
+
+<------->
+ k = i;
+<--------->
+
+
+<------->
+ i = i + 1;
+<--------->
+
+Tipo = int	Id = minloc	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+		----------------->  a == a  <-----------------
+		**Error variable "a" ya declarada**
+Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
+		----------------->  low == low  <-----------------
+		**Error variable "low" ya declarada**
+Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+		----------------->  high == high  <-----------------
+		**Error variable "high" ya declarada**
+Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+		----------------->  i == i  <-----------------
+		**Error variable "i" ya declarada**
+Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+		----------------->  k == k  <-----------------
+		**Error variable "k" ya declarada**
+Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<------->
+ i = low;
+<--------->
+
+
+<------->
+ i < high - 1;
+<--------->
+
+Tipo = int	Id = t	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<------->
+ k = minloc ( a , i , high );
+  funcion
+<--------->
+
+
+<------->
+ t = a [ k ];
+<--------->
+
+
+<------->
+ a [ k ] = a [ i ];
+<--------->
+
+
+<------->
+ a [ i ] = t;
+<--------->
+
+
+<------->
+ i = i + 1;
+<--------->
+
+Tipo = void	Id = sort	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+		----------------->  i == i  <-----------------
+		**Error variable "i" ya declarada**
+Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<------->
+ i = 0;
+<--------->
+
+
+<------->
+ i < 10;
+<--------->
+
+
+<------->
+ x [ i ] = input ( );
+ No hay tortillas 

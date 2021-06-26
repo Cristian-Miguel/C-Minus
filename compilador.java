@@ -59,7 +59,7 @@
                                         System.out.println("\u005ct\u005ct----------------->  "+dato[1]+" == "+Id[1]+"  <-----------------");
                     if(dato[1].equals(Id[1])){
                                                 i = pilacontrol.size()+1;
-                        System.out.println("\u005ct\u005ct**Error variable "+Id[1]+" ya declarada**");
+                        System.out.println("\u005ct\u005ct**Error variable \u005c""+Id[1]+"\u005c" ya declarada**");
                     }
                 }
                                 if(i != (pilacontrol.size()+2)){
@@ -101,21 +101,21 @@
                                 System.out.print(" "+expresion.elementAt(i));
                         }
                         System.out.println(";");
-                        //Obtenemos la variable de la exoresion
+                        //Obtenemos la variable de la expresion
                         //la buscamos en la tabla y si se encuentra
                         //la sacamos de la tabla
                         VarId = ( String ) expresion.elementAt(0);
                         valorGuardado = BuscarId(VarId);
 
-                        System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
-                        System.out.println(valorGuardado[3]+" - "+valorGuardado[4]+" - "+valorGuardado[5]);
+                        //System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
+                        //System.out.println(valorGuardado[3]+" - "+valorGuardado[4]+" - "+valorGuardado[5]);
                         //si se encontro el dato se hase lo siguiente
                         if(valorGuardado[0] != null || valorGuardado[0] != ""){
 
                                 //buscamos si es arreglo, si lo es buscamos
                                 //si su variable dentro de los corchetes
                                 //es valida si no mandamos un error
-                                if(valorGuardado[2] == "Arreglo"){
+                                if(valorGuardado[2].equals("Arreglo")){
 
                                         String numArray = "";
                                         try {
@@ -134,13 +134,13 @@
                                                 //buscamos la variable en la hash table
                                                 valorTemp = BuscarId(numArray);
                                                 //si se encientra la variable
-                                                if(valorTemp[0] != null){
+                                                if(!valorTemp[0].equals(null)){
 
                                                         //si el tipo es diferente de manda un error
                                                         if(!valorTemp[0].equals(valorGuardado[0])){
                                                                 System.out.println("**Error variable "+valorTemp[1]+" no compatible**");
                                                         }else{
-                                                                System.out.println("^^^  "+expresion.elementAt(5)+"  ^^^");
+                                                                //System.out.println("^^^  "+expresion.elementAt(5)+"  ^^^");
                                                                 BuscarError(valorGuardado[0], expresion, 5);
                                                         }
 
@@ -150,7 +150,7 @@
                                         }
 
                                 }else{
-                                        System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
+                                        //System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
                                         BuscarError(valorGuardado[0], expresion, 2);
 
                                 }
@@ -219,7 +219,7 @@
 
                                 String arregloTemp [] = new String[6];
                                 String base =  ( String ) expresion.elementAt(posicion);
-                                System.out.println("  base = "+base);
+                                //System.out.println("  base = "+base);
                                 //provocamos un error si hay una varible,
                                 //si no lo es prosigue con su evaluacion.
                                 try {
@@ -241,19 +241,19 @@
                                 } catch (NumberFormatException e) {
 
                                         arregloTemp = BuscarId(base);
-                                        System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
+                                        //System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
                                         if(arregloTemp[0].equals(TipoEspecifico)){
 
-                                                System.out.println("  comparacion == 0");
+                                                //System.out.println("  comparacion == 0");
                                                 int comparacion = tipo(arregloTemp[2], expresion, posicion);
-                                                System.out.println("  "+comparacion+" == 0");
+                                                //System.out.println("  "+comparacion+" == 0");
 
                                                 if(comparacion == 0){
                                                         posicion = expresion.size();
                                                 }else{
-                                                        System.out.println("  posicion = "+posicion);
+                                                        //System.out.println("  posicion = "+posicion);
                                                         posicion += comparacion;
-                                                        System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
+                                                        //System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
                                                 }
 
                                         }else{
@@ -276,39 +276,46 @@
 
                         String arregloTemp[] = new String[6];
                         String variableTemp;
-                        System.out.println("  \u005ctEstructura = "+Estructura+" posicion = "+posicion);
+                        //System.out.println("  \tEstructura = "+Estructura+" posicion = "+posicion);
                         switch (Estructura) {
                                         case "Arreglo":
 
-                                                variableTemp =  ( String ) expresion.elementAt(posicion+1);
-                                                if(variableTemp.equals("[")){
-                                                        variableTemp =  ( String ) expresion.elementAt(posicion+2);
-                                                        System.out.println("  variableTemp = "+variableTemp);
-                                                        try {
-                                                                int convertir = Integer.parseInt(variableTemp);
-                                                        }catch (NumberFormatException e) {
+                                                //System.out.println("\t tamano"+expresion.size()+" -------Datos");
+                                                if((posicion+1) < expresion.size()){
+                                                        variableTemp =  ( String ) expresion.elementAt(posicion+1);
+                                                        //System.out.println("\t"+expresion.elementAt(posicion+1)+" -------Datos");
+                                                        if(variableTemp.equals("[")){
+                                                                variableTemp =  ( String ) expresion.elementAt(posicion+2);
+                                                                //System.out.println("  variableTemp = "+variableTemp);
+                                                                try {
+                                                                        int convertir = Integer.parseInt(variableTemp);
+                                                                }catch (NumberFormatException e) {
 
-                                                                arregloTemp = BuscarId(variableTemp);
-                                                                if(arregloTemp[0].equals(null) || arregloTemp[0].equals("")){
-                                                                        System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
-                                                                }else{
+                                                                        arregloTemp = BuscarId(variableTemp);
+                                                                        if(arregloTemp[0].equals(null) || arregloTemp[0].equals("")){
+                                                                                //System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                                        }else{
 
-                                                                        if(!Estructura.equals(arregloTemp[0])){
-                                                                                System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
-                                                                                return 0;
+                                                                                if(!Estructura.equals(arregloTemp[0])){
+                                                                                        //System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                                                        return 0;
+                                                                                }
+
                                                                         }
 
                                                                 }
-
+                                                        }else{
+                                                                System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
+                                                                return 0;
                                                         }
                                                 }else{
-                                                        System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
-                                                        return 0;
-                                                }
+                                                                System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
+                                                                return 0;
+                                                        }
                                                 return 4;
 
                                         case "Varible":
-                                                System.out.println("  variable");
+                                                //System.out.println("  variable");
                                                 return 2;
                                         case "Funcion":
                                                 System.out.println("  funcion");
@@ -1056,21 +1063,6 @@
     finally { jj_save(13, xla); }
   }
 
-  static private boolean jj_3R_58() {
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_55() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(30)) {
-    jj_scanpos = xsp;
-    if (jj_3R_58()) return true;
-    }
-    return false;
-  }
-
   static private boolean jj_3_6() {
     if (jj_3R_18()) return true;
     if (jj_3R_19()) return true;
@@ -1533,6 +1525,21 @@
     if (jj_3R_20()) return true;
     if (jj_scan_token(Op_Asignacion)) return true;
     if (jj_3R_21()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_58() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_55() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(30)) {
+    jj_scanpos = xsp;
+    if (jj_3R_58()) return true;
+    }
     return false;
   }
 
