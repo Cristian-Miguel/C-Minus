@@ -110,7 +110,7 @@
                         //System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
                         //System.out.println(valorGuardado[3]+" - "+valorGuardado[4]+" - "+valorGuardado[5]);
                         //si se encontro el dato se hase lo siguiente
-                        if(valorGuardado[0] != null || valorGuardado[0] != ""){
+                        if( valorGuardado[0] != null ){
 
                                 //buscamos si es arreglo, si lo es buscamos
                                 //si su variable dentro de los corchetes
@@ -134,7 +134,7 @@
                                                 //buscamos la variable en la hash table
                                                 valorTemp = BuscarId(numArray);
                                                 //si se encientra la variable
-                                                if(!valorTemp[0].equals(null)){
+                                                if(valorTemp[0] != null){
 
                                                         //si el tipo es diferente de manda un error
                                                         if(!valorTemp[0].equals(valorGuardado[0])){
@@ -150,6 +150,7 @@
                                         }
 
                                 }else{
+                                        System.out.println(" No es Nulo Var");
                                         //System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
                                         BuscarError(valorGuardado[0], expresion, 2);
 
@@ -242,25 +243,30 @@
 
                                         arregloTemp = BuscarId(base);
                                         //System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
-                                        if(arregloTemp[0].equals(TipoEspecifico)){
+                                        if(arregloTemp[0] != null){
+                                                //System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
+                                                if(arregloTemp[0].equals(TipoEspecifico)){
 
-                                                //System.out.println("  comparacion == 0");
-                                                int comparacion = tipo(arregloTemp[2], expresion, posicion);
-                                                //System.out.println("  "+comparacion+" == 0");
+                                                        //System.out.println("  comparacion == 0");
+                                                        int comparacion = tipo(arregloTemp[2], expresion, posicion);
+                                                        //System.out.println("  "+comparacion+" == 0");
 
-                                                if(comparacion == 0){
-                                                        posicion = expresion.size();
+                                                        if(comparacion == 0){
+                                                                posicion = expresion.size();
+                                                        }else{
+                                                                //System.out.println("  posicion = "+posicion);
+                                                                posicion += comparacion;
+                                                                //System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
+                                                        }
+
                                                 }else{
-                                                        //System.out.println("  posicion = "+posicion);
-                                                        posicion += comparacion;
-                                                        //System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
+                                                        System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                        posicion = expresion.size()+1;
                                                 }
-
                                         }else{
-                                                System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
-                                                posicion = expresion.size();
+                                                System.out.println("**Error variable \u005c""+base+"\u005c" no se encuentra declarada**");
+                                                posicion = expresion.size()+1;
                                         }
-
                                 }
 
                         }
@@ -292,7 +298,7 @@
                                                                 }catch (NumberFormatException e) {
 
                                                                         arregloTemp = BuscarId(variableTemp);
-                                                                        if(arregloTemp[0].equals(null) || arregloTemp[0].equals("")){
+                                                                        if(arregloTemp[0] == null || arregloTemp[0].equals("")){
                                                                                 //System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
                                                                         }else{
 
@@ -318,7 +324,7 @@
                                                 //System.out.println("  variable");
                                                 return 2;
                                         case "Funcion":
-                                                System.out.println("  funcion");
+                                                //System.out.println("  funcion");
                                                 int datos = 0;
                                                 for(int i = posicion; i<expresion.size(); i++){
 
@@ -1063,12 +1069,6 @@
     finally { jj_save(13, xla); }
   }
 
-  static private boolean jj_3_6() {
-    if (jj_3R_18()) return true;
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_19() {
     Token xsp;
     while (true) {
@@ -1540,6 +1540,12 @@
     jj_scanpos = xsp;
     if (jj_3R_58()) return true;
     }
+    return false;
+  }
+
+  static private boolean jj_3_6() {
+    if (jj_3R_18()) return true;
+    if (jj_3R_19()) return true;
     return false;
   }
 

@@ -11,6 +11,7 @@ Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  k = low;
+ No es Nulo Var
 <--------->
 
 
@@ -22,11 +23,13 @@ Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  i = low + 1;
+ No es Nulo Var
 <--------->
 
 
 <------->
  i < high;
+ No es Nulo Var
 <--------->
 
 
@@ -44,11 +47,13 @@ Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  k = i;
+ No es Nulo Var
 <--------->
 
 
 <------->
  i = i + 1;
+ No es Nulo Var
 <--------->
 
 Tipo = int	Id = minloc	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
@@ -70,23 +75,26 @@ Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  i = low;
+ No es Nulo Var
 <--------->
 
 
 <------->
  i < high - 1;
+ No es Nulo Var
 <--------->
 
 Tipo = int	Id = t	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  k = minloc ( a , i , high );
-  funcion
+ No es Nulo Var
 <--------->
 
 
 <------->
  t = a [ k ];
+ No es Nulo Var
 <--------->
 
 
@@ -102,6 +110,7 @@ Tipo = int	Id = t	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  i = i + 1;
+ No es Nulo Var
 <--------->
 
 Tipo = void	Id = sort	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
@@ -111,14 +120,68 @@ Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
  i = 0;
+ No es Nulo Var
 <--------->
 
 
 <------->
  i < 10;
+ No es Nulo Var
 <--------->
 
 
 <------->
  x [ i ] = input ( );
  No hay tortillas 
+**Error variable "input" no se encuentra declarada**
+<--------->
+
+
+<------->
+ i = i + 1;
+ No es Nulo Var
+<--------->
+
+
+<------->
+ sort ( x , 0 , 10 );
+ No es Nulo Var
+**Error variable x no compatible**
+<--------->
+
+
+<------->
+ i = 0;
+ No es Nulo Var
+<--------->
+
+
+<------->
+ i < 10;
+ No es Nulo Var
+<--------->
+
+
+<------->
+ output ( x [ i ] );
+ No hay tortillas 
+**Error variable no declarada**
+<--------->
+
+
+<------->
+ i = i + 1;
+ No es Nulo Var
+<--------->
+
+Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+hashtable valores: int  	minloc			Funcion	null	1	Clase
+hashtable valores: void  	sort			Funcion	null	1	Clase
+hashtable valores: int  	low			Varible	null	1	Local
+hashtable valores: int  	k			Varible	null	1	Local
+hashtable valores: int  	i			Varible	null	1	Local
+hashtable valores: void  	main			Funcion	null	1	Clase
+hashtable valores: int  	a			Arreglo	null	-	Local
+hashtable valores: int  	x			Arreglo	null	10	Global
+hashtable valores: int  	high			Varible	null	1	Local
+hashtable valores: int  	t			Varible	null	1	Local
