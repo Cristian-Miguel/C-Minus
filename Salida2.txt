@@ -1,335 +1,72 @@
 Encontre un comentario de muchas lineas
-token == ]
-token == low
-token == high
+Tipo = int	Id = x	Estructura = Arreglo	Valor = null	Tamano = 10	Posicion = Global
+Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
+Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+		----------------->  x == x  <-----------------
+		**Error variable x ya declarada**
+Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <------->
- tamano 3
-error
-
-
-low
- Encontrado 
-int
-int - low - Varible - 1 - Local
- Variable 
+ k = low;
+int - k - Varible - null - 1 - Local
+^^^  low  ^^^
+  base = low
+  int == int
+  comparacion == 0
+  	Estructura = Varible posicion = 2
+  variable
+  2 == 0
+  posicion = 2
+  posicion = 4 comparacion = 2
 <--------->
 
 
 <------->
- tamano 6
-error
-
-
-]
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
+ x = a [ low ];
+int - x - Arreglo - null - 10 - Global
+**Error la variable x no es compatible**
 <--------->
 
 
 <------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
+ i = low + 1;
+int - i - Varible - null - 1 - Local
+^^^  low  ^^^
+  base = low
+  int == int
+  comparacion == 0
+  	Estructura = Varible posicion = 2
+  variable
+  2 == 0
+  posicion = 2
+  posicion = 4 comparacion = 2
+  base = 1
 <--------->
 
 
 <------->
- tamano 3
-error
-
-
-high
- Encontrado 
-int
-int - high - Varible - 1 - Local
- Variable 
+ i < high;
+int - i - Varible - null - 1 - Local
+^^^  high  ^^^
+  base = high
+  int == int
+  comparacion == 0
+  	Estructura = Varible posicion = 2
+  variable
+  2 == 0
+  posicion = 2
+  posicion = 4 comparacion = 2
 <--------->
 
 
 <------->
- tamano 6
-error
-
-
-x
- Encontrado 
-int
-int - x - Arreglo - 10 - Global
- Arreglo 
- No hay tortillas 
-**Error la variablenull no esta previamente declarada**
-<--------->
-
-
-<------->
- tamano 6
-error
-
-
-]
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 3
-error
-
-
-i
- Encontrado 
-int
-int - i - Varible - 1 - Local
- Variable 
-<--------->
-
-
-<------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-token == ]
-token == low
-token == high
-
-<------->
- tamano 3
-error
-
-
-low
- Encontrado 
-int
-int - low - Varible - 1 - Local
- Variable 
-<--------->
-
-
-<------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 10
-error
-
-
-)
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 6
-error
-
-
-]
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 9
-error
-
-
-]
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 6
-error
-
-
-t
- Encontrado 
-int
-int - t - Varible - 1 - Local
- Variable 
-<--------->
-
-
-<------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 3
-error
-
-
-0
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 3
-error
-
-
-10
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 8
-error
-
-
-)
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 8
-error
-
-
-)
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 3
-error
-
-
-0
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 3
-error
-
-
-10
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 7
-error
-
-
-)
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-
-<------->
- tamano 5
-error
-
-
-1
- No hay tortillas 
-null
-null - null - null - null - null
- Variable 
-<--------->
-
-hashtable valores: int  	minloc			Funcion	null	1	Clase
-hashtable valores: void  	sort			Funcion	null	1	Clase
-hashtable valores: int  	low			Varible	null	1	Local
-hashtable valores: int  	low			Varible	null	1	Local
-hashtable valores: int  	k			Varible	null	1	Local
-hashtable valores: int  	k			Varible	null	1	Local
-hashtable valores: int  	i			Varible	null	1	Local
-hashtable valores: int  	i			Varible	null	1	Local
-hashtable valores: void  	main			Funcion	null	1	Clase
-hashtable valores: int  	a			Varible	null	1	Local
-hashtable valores: int  	a			Varible	null	1	Local
-hashtable valores: int  	x			Varible	null	1	Local
-hashtable valores: int  	x			Arreglo	null	10	Global
-hashtable valores: int  	high			Varible	null	1	Local
-hashtable valores: int  	high			Varible	null	1	Local
-hashtable valores: int  	t			Varible	null	1	Local
+ a [ i ] < x;
+int - a - Arreglo - null - - - Local
+^^^  x  ^^^
+  base = x
+  int == int
+  comparacion == 0
+  	Estructura = Arreglo posicion = 5

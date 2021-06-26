@@ -53,18 +53,20 @@
                 pilacontrol = (Stack) contenedor.get(clave);
                 //System.out.println("---------> 1");
                 //System.out.println("pilacontrol = "+pilacontrol.size()+" pilatemp = "+pilatemp.size());
-                for (int i = 0; i < pilacontrol.size(); i++) {
+                                int i = 0;
+                for (i = 0; i < pilacontrol.size(); i++) {
                     String dato[] = (String []) pilacontrol.elementAt(i);
-                    if(dato[1] == Id[1]){
-                        System.out.println("**Error variable ya declarada**");
-                        break;
-                    }else{
-                        pilacontrol.push(Id);
-                        contenedor.put(clave, pilacontrol);
-                        //System.out.println("---------> 1 --------> 2");
-                        break;
+                                        System.out.println("\u005ct\u005ct----------------->  "+dato[1]+" == "+Id[1]+"  <-----------------");
+                    if(dato[1].equals(Id[1])){
+                                                i = pilacontrol.size()+1;
+                        System.out.println("\u005ct\u005ct**Error variable "+Id[1]+" ya declarada**");
                     }
                 }
+                                if(i != (pilacontrol.size()+2)){
+                                        pilacontrol.push(Id);
+                    contenedor.put(clave, pilacontrol);
+                                }
+
             }else{
                 //System.out.println("---------> 2");
                 pilacontrol.push(Id);
@@ -78,108 +80,115 @@
                         System.out.println("<------->");
 
                         String  acumuladorDatos = "";
-                        int     clave = 0;
                         boolean error = false;
                         Stack   expresion = new Stack();
-                        boolean noVariable = false;
-                        boolean pilavacia;
-                        int     tamanoVar;
                         String  valorGuardado[] = new String[6];
                         String  valorTemp[] = new String[6];
                         String  VarId;
-                        System.out.print(" tamano "+var.size());
+                        //Acomodamos la pila para recorrerla
+                        try {
 
-                        try{
-                                while(true){
-                                        acumuladorDatos = ( String ) var.pop();
+                                for (int i = 0; i < var.size(); i++) {
+                                        acumuladorDatos = ( String ) var.elementAt(i);
                                         //System.out.print(" "+acumuladorDatos);
                                         expresion.push(acumuladorDatos);
                                 }
-                        }catch (EmptyStackException e) {
-                                System.out.println("");
-                                System.out.println("error");
-                        }
-                        System.out.println("");
-                        System.out.println("");
-                        System.out.println(expresion.elementAt(0));
 
+                        } catch (EmptyStackException e) {System.out.println(";");}
+
+                        //System.out.println("");    
+                        for (int i = 0; i < expresion.size(); i++) {
+                                System.out.print(" "+expresion.elementAt(i));
+                        }
+                        System.out.println(";");
+                        //Obtenemos la variable de la exoresion
+                        //la buscamos en la tabla y si se encuentra
+                        //la sacamos de la tabla
                         VarId = ( String ) expresion.elementAt(0);
                         valorGuardado = BuscarId(VarId);
-                        System.out.println(valorGuardado[0]);
-                        System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
-                        System.out.println(valorGuardado[4]+" - "+valorGuardado[5]);
 
+                        System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
+                        System.out.println(valorGuardado[3]+" - "+valorGuardado[4]+" - "+valorGuardado[5]);
+                        //si se encontro el dato se hase lo siguiente
                         if(valorGuardado[0] != null || valorGuardado[0] != ""){
 
+                                //buscamos si es arreglo, si lo es buscamos
+                                //si su variable dentro de los corchetes
+                                //es valida si no mandamos un error
                                 if(valorGuardado[2] == "Arreglo"){
 
-                                        System.out.println(" Arreglo ");
                                         String numArray = "";
                                         try {
 
-                                                numArray = ( String ) expresion.elementAt(2);
-                                                int convertir = Integer.parseInt(numArray);
+                                                numArray = ( String ) expresion.elementAt(1);
+                                                if(!numArray.equals("=")){
+                                                        numArray = ( String ) expresion.elementAt(2);
+                                                        int convertir = Integer.parseInt(numArray);
+                                                }else{
+                                                        System.out.println("**Error la variable "+expresion.elementAt(0)+" no es compatible**");
+                                                }
 
                                         } catch (NumberFormatException e) {
+
                                                 error = true;
+                                                //buscamos la variable en la hash table
                                                 valorTemp = BuscarId(numArray);
+                                                //si se encientra la variable
                                                 if(valorTemp[0] != null){
 
-                                                        if(valorTemp[0] != valorGuardado[0]){
+                                                        //si el tipo es diferente de manda un error
+                                                        if(!valorTemp[0].equals(valorGuardado[0])){
                                                                 System.out.println("**Error variable "+valorTemp[1]+" no compatible**");
+                                                        }else{
+                                                                System.out.println("^^^  "+expresion.elementAt(5)+"  ^^^");
+                                                                BuscarError(valorGuardado[0], expresion, 5);
                                                         }
 
                                                 }
-                                                else{
-                                                         System.out.println("**Error la variable"+valorTemp[1]+" no esta previamente declarada**");
-                                                }
+                                                else{ System.out.println("**Error la variable"+valorTemp[1]+" no esta previamente declarada**"); }
 
-                                        }finally{
-                                                if(!error){
-                                                        BuscarError(valorGuardado[2], expresion);
-                                                }
                                         }
 
-                                }
-                                else{
-                                        System.out.println(" Variable ");
+                                }else{
+                                        System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
+                                        BuscarError(valorGuardado[0], expresion, 2);
+
                                 }
                         }else{
                 System.out.println("**Error variable no declarada**");
             }
 
-                        while(!expresion.isEmpty()){
-                                expresion.pop();
-                        }
-
-
+                        while(!expresion.isEmpty()){ expresion.pop();}
+                while(!var.isEmpty()){ var.pop();}
 
                 }
 
                 public static String[] BuscarId(String Id){
+
                         int     clave = 0;
                         int     nL = Id.length();
             Stack   pilatemp = new Stack();
             Stack   pilacontrol = new Stack();
                         boolean pilavacia;
                         String  retorno[] = new String [6];
-
             for(int i = 0; i < nL ; i++){
+
                 char character = Id.charAt(i); // start on the first character
                 int ascii = (int) character; //convert the first character
                 clave = clave+ascii;
-            }
 
+            }
             pilatemp = (Stack) contenedor.get(clave);
             pilavacia = pilatemp == null;
-
             if(!pilavacia){
 
                 pilacontrol = (Stack) contenedor.get(clave);
                 for (int i = 0; i < pilacontrol.size(); i++) {
+
                     String dato[] = (String []) pilacontrol.elementAt(i);
                     if(dato[1].equals(Id)){
-                                                System.out.println(" Encontrado ");
+
+                                                //System.out.println(" Encontrado ");
                         retorno[0] = dato[0];
                                                 retorno[1] = dato[1];
                                                 retorno[2] = dato[2];
@@ -188,36 +197,138 @@
                                                 retorno[5] = dato[5];
                         i = pilacontrol.size();
                                                 return retorno;
+
                     }
+
                 }
 
+
             }
-                        else{
-                                System.out.println(" No hay tortillas ");
-                        }
+                        else{ System.out.println(" No hay tortillas "); }
                         return retorno;
                 }
 
-                public static void BuscarError(String TipoEspecifico, Stack expresion){
-                        String arregloTemp [] = new String[6];
+                //Busca en toda la cadena asignada si alguna variable o numero no es del 
+                //tipo especifico, manda error si no lo es
+                public static void BuscarError(String TipoEspecifico, Stack expresion, int posicion){
+
+                        //hasta que la posicion no se igual no dejara de buscar
+                        //varibles o numeros del mismo tipo, si llega ha hacer del
+                        //tipo diferente se detiene y tambien manda el error.
+                        while(posicion < expresion.size()){
+
+                                String arregloTemp [] = new String[6];
+                                String base =  ( String ) expresion.elementAt(posicion);
+                                System.out.println("  base = "+base);
+                                //provocamos un error si hay una varible,
+                                //si no lo es prosigue con su evaluacion.
+                                try {
+                                        int convertir = Integer.parseInt(base);
+                                        if(TipoEspecifico.equals("int")){
+                                                int i = 0;
+                                                for (i = 0; i < base.length(); i++) {
+                                                        char character = base.charAt(i);
+                                                        if(character == '.'){
+                                                                System.out.println("**Error Valores Flotantes no Acceptados**");
+                                                                i = base.length()+1;
+                                                                posicion = expresion.size();
+                                                        }
+                                                }
+                                                if(i != base.length()+2){ posicion += 2; }
+                                        }else{
+                                                posicion += 2;
+                                        }
+                                } catch (NumberFormatException e) {
+
+                                        arregloTemp = BuscarId(base);
+                                        System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
+                                        if(arregloTemp[0].equals(TipoEspecifico)){
+
+                                                System.out.println("  comparacion == 0");
+                                                int comparacion = tipo(arregloTemp[2], expresion, posicion);
+                                                System.out.println("  "+comparacion+" == 0");
+
+                                                if(comparacion == 0){
+                                                        posicion = expresion.size();
+                                                }else{
+                                                        System.out.println("  posicion = "+posicion);
+                                                        posicion += comparacion;
+                                                        System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
+                                                }
+
+                                        }else{
+                                                System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                posicion = expresion.size();
+                                        }
+
+                                }
+
+                        }
 
                 }
 
-                public static void tipo(){
+                //buscamos si cumple con la estructura de cada parte, 
+                //si la varible o la funcion o arreglo no cumple con el tipo 
+                //especifico de la variable principal se imprime el error y se 
+                //deja de buscar tanto en esta funcion como en la de BuscarError
+                //si hay errores en la estructura se regresara un 0
+                public static int tipo(String Estructura, Stack expresion, int posicion){
 
-                        // switch (valorGuardado[2]) {
-                        // 		case "Arreglo":
+                        String arregloTemp[] = new String[6];
+                        String variableTemp;
+                        System.out.println("  \u005ctEstructura = "+Estructura+" posicion = "+posicion);
+                        switch (Estructura) {
+                                        case "Arreglo":
 
-                        // 			break;
-                        // 		case "Varible":
+                                                variableTemp =  ( String ) expresion.elementAt(posicion+1);
+                                                if(variableTemp.equals("[")){
+                                                        variableTemp =  ( String ) expresion.elementAt(posicion+2);
+                                                        System.out.println("  variableTemp = "+variableTemp);
+                                                        try {
+                                                                int convertir = Integer.parseInt(variableTemp);
+                                                        }catch (NumberFormatException e) {
 
-                        // 			break;
-                        // 		case "Funcion":
+                                                                arregloTemp = BuscarId(variableTemp);
+                                                                if(arregloTemp[0].equals(null) || arregloTemp[0].equals("")){
+                                                                        System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                                }else{
 
-                        // 			break;
-                        // 		default:
-                        // 			throw new AssertionError();
-                        // 	}
+                                                                        if(!Estructura.equals(arregloTemp[0])){
+                                                                                System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                                                return 0;
+                                                                        }
+
+                                                                }
+
+                                                        }
+                                                }else{
+                                                        System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
+                                                        return 0;
+                                                }
+                                                return 4;
+
+                                        case "Varible":
+                                                System.out.println("  variable");
+                                                return 2;
+                                        case "Funcion":
+                                                System.out.println("  funcion");
+                                                int datos = 0;
+                                                for(int i = posicion; i<expresion.size(); i++){
+
+                                                        datos++;
+                                                        variableTemp =  ( String ) expresion.elementAt(i);
+                                                        if(variableTemp.equals(")")){
+                                                                i = expresion.size();
+                                                                datos += 3;
+                                                                return datos;
+                                                        }
+
+                                                }
+                                                return 3;
+                                        default:
+                                                throw new AssertionError();
+                                }
+
                 }
 
                 public static void DescargarPilaCadena(){
@@ -235,9 +346,9 @@
                                 var.pop();
                         }
                         GenerarHash(acumuladorDatos);
-                        /*System.out.print("Tipo = "+acumuladorDatos[0]+"\tId = "+acumuladorDatos[1]);
-			System.out.print("\tEstructura = "+acumuladorDatos[2]+"\tValor = "+acumuladorDatos[3]);
-			System.out.println("\tTamano = "+acumuladorDatos[4]+"\tPosicion = "+acumuladorDatos[5]);*/
+                        System.out.print("Tipo = "+acumuladorDatos[0]+"\u005ctId = "+acumuladorDatos[1]);
+                        System.out.print("\u005ctEstructura = "+acumuladorDatos[2]+"\u005ctValor = "+acumuladorDatos[3]);
+                        System.out.println("\u005ctTamano = "+acumuladorDatos[4]+"\u005ctPosicion = "+acumuladorDatos[5]);
                 }
 
   static final public void Inicio() throws ParseException {
@@ -408,8 +519,8 @@
     jj_consume_token(Id);
                cadena.push(token.image);
     param_P();
-                    System.out.println("token == "+token.image);
-                if(token.image == null){ cadena.push("Arreglo"); cadena.push("-");  }
+                     //System.out.println("token == "+token.image);
+                if(token.image == "]"){ cadena.push("Arreglo"); cadena.push("-");  }
                 else{ cadena.push("Varible"); cadena.push("1"); }
                 cadena.push("Local"); DescargarPilaCadena();
   }
@@ -945,6 +1056,193 @@
     finally { jj_save(13, xla); }
   }
 
+  static private boolean jj_3R_58() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_55() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(30)) {
+    jj_scanpos = xsp;
+    if (jj_3R_58()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_6() {
+    if (jj_3R_18()) return true;
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_6()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_49() {
+    if (jj_scan_token(Res_while)) return true;
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_54() {
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_53() {
+    if (jj_3R_57()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_48() {
+    if (jj_scan_token(Res_if)) return true;
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_47() {
+    if (jj_scan_token(Op_Llave_Izq)) return true;
+    if (jj_3R_53()) return true;
+    if (jj_3R_54()) return true;
+    if (jj_scan_token(Op_Llave_Der)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_46() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_52()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(30)) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_52() {
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(Op_Punto_Coma)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_36() {
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_35() {
+    if (jj_3R_49()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_34() {
+    if (jj_3R_48()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_33() {
+    if (jj_3R_47()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_32() {
+    if (jj_3R_46()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_18() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_32()) {
+    jj_scanpos = xsp;
+    if (jj_3R_33()) {
+    jj_scanpos = xsp;
+    if (jj_3R_34()) {
+    jj_scanpos = xsp;
+    if (jj_3R_35()) {
+    jj_scanpos = xsp;
+    if (jj_3R_36()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_5() {
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_57() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_5()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_14() {
+    if (jj_scan_token(Op_Coma)) return true;
+    if (jj_3R_21()) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_64() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_14()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_63() {
+    if (jj_3R_21()) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_62() {
+    if (jj_3R_63()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    if (jj_3R_30()) return true;
+    if (jj_scan_token(Id)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_61() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_62()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_scan_token(Op_Coma)) return true;
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_16() {
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
   static private boolean jj_3_3() {
     if (jj_3R_16()) return true;
     return false;
@@ -1235,193 +1533,6 @@
     if (jj_3R_20()) return true;
     if (jj_scan_token(Op_Asignacion)) return true;
     if (jj_3R_21()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_58() {
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_55() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(30)) {
-    jj_scanpos = xsp;
-    if (jj_3R_58()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3_6() {
-    if (jj_3R_18()) return true;
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_19() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_6()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_49() {
-    if (jj_scan_token(Res_while)) return true;
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_54() {
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_53() {
-    if (jj_3R_57()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_48() {
-    if (jj_scan_token(Res_if)) return true;
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_47() {
-    if (jj_scan_token(Op_Llave_Izq)) return true;
-    if (jj_3R_53()) return true;
-    if (jj_3R_54()) return true;
-    if (jj_scan_token(Op_Llave_Der)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_46() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_52()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(30)) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_52() {
-    if (jj_3R_21()) return true;
-    if (jj_scan_token(Op_Punto_Coma)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_36() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_35() {
-    if (jj_3R_49()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_34() {
-    if (jj_3R_48()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_33() {
-    if (jj_3R_47()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_32() {
-    if (jj_3R_46()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_18() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_32()) {
-    jj_scanpos = xsp;
-    if (jj_3R_33()) {
-    jj_scanpos = xsp;
-    if (jj_3R_34()) {
-    jj_scanpos = xsp;
-    if (jj_3R_35()) {
-    jj_scanpos = xsp;
-    if (jj_3R_36()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_5() {
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_57() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_5()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_14() {
-    if (jj_scan_token(Op_Coma)) return true;
-    if (jj_3R_21()) return true;
-    if (jj_3R_64()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_64() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_14()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_63() {
-    if (jj_3R_21()) return true;
-    if (jj_3R_64()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_62() {
-    if (jj_3R_63()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_17() {
-    if (jj_3R_30()) return true;
-    if (jj_scan_token(Id)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_61() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_62()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3_4() {
-    if (jj_scan_token(Op_Coma)) return true;
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_16() {
-    if (jj_3R_17()) return true;
     return false;
   }
 
