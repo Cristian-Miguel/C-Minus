@@ -10,13 +10,13 @@ PARSER_BEGIN(compilador)
 	import java.util.Enumeration;
 	import java.util.Hashtable;
 	import java.util.Stack;
+	import java.util.EmptyStackException;
 
 	public class compilador {
 
 		static Hashtable contenedor = new Hashtable();
-		static String ArrayTemp [] = new String [6];
-		static Stack var = new Stack();
 		static Stack cadena = new Stack();
+		static Stack var = new Stack();
 
 		public static void main(String args[]) throws ParseException {
 			compilador analizador = new compilador(System.in);
@@ -38,6 +38,12 @@ PARSER_BEGIN(compilador)
 			//System.out.print("Tipo = "+Id[0]+" Id = "+Id[1]);
 			//System.out.print(" Estructura = "+Id[2]+"Valor = "+Id[3]);
 			//System.out.println(" Tamano = "+Id[4]+"Posicion = "+Id[5]);
+
+			//se guardara en un arreglo con la siguiente estructura
+			// 0       1        2         3       4       5
+			//Tipo    ID    Estructura  Valor  tamano  posicion
+			// int    ab     arreglo      4      3      Local
+
             int nL = Id[1].length();
             Stack pilatemp = new Stack();
             Stack pilacontrol = new Stack();
@@ -73,21 +79,152 @@ PARSER_BEGIN(compilador)
                 contenedor.put(clave, pilacontrol);
             }
 
-			for (int i = 0; i < ArrayTemp.length; i++) {
-				ArrayTemp[i]="";
-			}
-
         }
 
 		public static void DescargarPila(){
 			System.out.println("");
 			System.out.println("<------->");
-
-			String acumuladorDatos = "";
-			while(!var.isEmpty()){
-				acumuladorDatos = var.pop() + acumuladorDatos;
+			
+			String  acumuladorDatos = "";
+			int     clave = 0;
+			boolean error = false;
+			Stack   expresion = new Stack();
+			boolean noVariable = false; 
+            Stack   pilacontrol = new Stack();
+			Stack   pilatemp = new Stack();
+			boolean pilavacia;
+			int     tamanoVar;
+			String  valorGuardado[] = new String[6]; 
+			String  valorTemp[] = new String[6]; 
+			String  VarId;
+			try{
+				while(true){
+					acumuladorDatos = ( String ) var.pop();
+					//System.out.print(" "+acumuladorDatos);
+					expresion.push(acumuladorDatos);
+				}
+			}catch (EmptyStackException e) {
+				System.out.println("");
+				System.out.println("error");
 			}
-			System.out.println(acumuladorDatos+";");
+			System.out.println("");
+			for(int i = 0; i<expresion.size(); i++ ){
+				System.out.print(" "+expresion.elementAt(i));
+			}
+			System.out.println("");
+			System.out.println(expresion.elementAt(0));
+
+			VarId = ( String ) expresion.elementAt(0);
+			valorGuardado = BuscarId(VarId);
+			System.out.println(valorGuardado[0]);
+			System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
+			System.out.println(valorGuardado[4]+" - "+valorGuardado[5]);
+
+			if(valorGuardado[0] != null || valorGuardado[0] != ""){
+
+				if(valorGuardado[2] == "Arreglo"){
+
+					System.out.println(" Arreglo ");
+					String numArray = "";
+					try {
+
+						numArray = ( String ) expresion.elementAt(2);
+						int convertir = Integer.parseInt(numArray);
+
+					} catch (NumberFormatException e) {
+						error = true;
+						valorTemp = BuscarId(numArray);
+						if(valorTemp[0] != null){  
+
+							if(valorTemp[0] != valorGuardado[0]){
+								System.out.println("**Error variable "+valorTemp[1]+" no compatible**");
+							}
+
+						}
+						else{
+							 System.out.println("**Error la variable"+valorTemp[1]+" no esta previamente declarada**");
+						}
+
+					}finally{
+						if(!error){
+							BuscarError(valorGuardado[2], expresion);
+						}
+					}
+
+				}
+				else{
+					System.out.println(" Variable ");
+				}
+			}else{
+                System.out.println("**Error variable no declarada**");
+            }
+
+
+			
+		}
+
+		public static String[] BuscarId(String Id){
+			int     clave = 0;
+			int     nL = Id.length();
+            Stack   pilatemp = new Stack();
+            Stack   pilacontrol = new Stack();
+			boolean pilavacia;
+			String  retorno[] = new String [6];
+			
+            for(int i = 0; i < nL ; i++){   
+                char character = Id.charAt(i); // start on the first character
+                int ascii = (int) character; //convert the first character
+                clave = clave+ascii; 
+            }
+
+            pilatemp = (Stack) contenedor.get(clave);
+            pilavacia = pilatemp == null;
+            
+            if(!pilavacia){
+
+                pilacontrol = (Stack) contenedor.get(clave);
+                for (int i = 0; i < pilacontrol.size(); i++) {
+                    String dato[] = (String []) pilacontrol.elementAt(i);
+                    if(dato[1].equals(Id)){
+						System.out.println(" Encontrado ");
+                        retorno[0] = dato[0];  
+						retorno[1] = dato[1];  
+						retorno[2] = dato[2];  
+						retorno[3] = dato[3];  
+						retorno[4] = dato[4];  
+						retorno[5] = dato[5];  
+                        i = pilacontrol.size();
+						return retorno;
+                    }
+                }
+
+            }
+			else{
+				System.out.println(" No hay tortillas ");
+			}
+			return retorno;
+		}
+
+		public static void BuscarError(String TipoEspecifico, Stack expresion){
+			String arregloTemp [] = new String[6];
+
+		}
+
+		public static void tipo(){
+
+			// switch (valorGuardado[2]) {
+			// 		case "Arreglo":
+						
+			// 			break;
+			// 		case "Varible":
+						
+			// 			break;
+			// 		case "Funcion":
+						
+			// 			break;
+			// 		default:
+			// 			throw new AssertionError();
+			// 	}
 		}
 
 		public static void DescargarPilaCadena(){
@@ -245,9 +382,9 @@ void param() :{}
 {	
 	type_specifier() { cadena.push(token.image);} 
 	<Id> { cadena.push(token.image); } 
-	param_P() {
-		if(token.image == null){cadena.push("Varible"); cadena.push("1");}
-		else{cadena.push("Arreglo"); cadena.push("-");}  
+	param_P() { System.out.println("token == "+token.image);
+		if(token.image == null){ cadena.push("Arreglo"); cadena.push("-");  }
+		else{ cadena.push("Varible"); cadena.push("1"); }  
 		cadena.push("Local"); DescargarPilaCadena();
 		}								
 } 
@@ -281,7 +418,7 @@ void statement() :{}
 //---14
 void expression_stmt() :{}	
 {	  
-	expression() <Op_Punto_Coma>
+	expression() <Op_Punto_Coma>{DescargarPila(); System.out.println("<--------->\n");}
 	| <Op_Punto_Coma> 									
 } 
 
@@ -391,14 +528,20 @@ void factor() :{ /*System.out.println("---> funcion factor <---");*/ }
 }
 
 //---27
-void call() :{} 		{	<Id> <Op_Parentesis_Izq> args() <Op_Parentesis_Der>					}
+void call() :{} 		
+{	
+	<Id> { var.push(token.image); }
+	<Op_Parentesis_Izq>{ var.push(token.image); } 
+	args() 
+	<Op_Parentesis_Der>{ var.push(token.image); }				
+}
 
 //---28
 void args() :{} 		{	( arg_list() )*										}
 
 //---29---------------------recursividad a la izquierda
 void arg_list() :{} 		{	expression() arg_list_P()								}
-void arg_list_P() :{} 		{	( LOOKAHEAD(2) <Op_Coma> expression() arg_list_P() )*					}
+void arg_list_P() :{} 		{	( LOOKAHEAD(2) <Op_Coma>{ var.push(token.image); } expression() arg_list_P() )*					}
 
 
 

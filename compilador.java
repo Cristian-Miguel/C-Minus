@@ -2,13 +2,13 @@
         import java.util.Enumeration;
         import java.util.Hashtable;
         import java.util.Stack;
+        import java.util.EmptyStackException;
 
         public class compilador implements compiladorConstants {
 
                 static Hashtable contenedor = new Hashtable();
-                static String ArrayTemp [] = new String [6];
-                static Stack var = new Stack();
                 static Stack cadena = new Stack();
+                static Stack var = new Stack();
 
                 public static void main(String args[]) throws ParseException {
                         compilador analizador = new compilador(System.in);
@@ -30,6 +30,12 @@
                         //System.out.print("Tipo = "+Id[0]+" Id = "+Id[1]);
                         //System.out.print(" Estructura = "+Id[2]+"Valor = "+Id[3]);
                         //System.out.println(" Tamano = "+Id[4]+"Posicion = "+Id[5]);
+
+                        //se guardara en un arreglo con la siguiente estructura
+                        // 0       1        2         3       4       5
+                        //Tipo    ID    Estructura  Valor  tamano  posicion
+                        // int    ab     arreglo      4      3      Local
+
             int nL = Id[1].length();
             Stack pilatemp = new Stack();
             Stack pilacontrol = new Stack();
@@ -65,21 +71,152 @@
                 contenedor.put(clave, pilacontrol);
             }
 
-                        for (int i = 0; i < ArrayTemp.length; i++) {
-                                ArrayTemp[i]="";
-                        }
-
         }
 
                 public static void DescargarPila(){
                         System.out.println("");
                         System.out.println("<------->");
 
-                        String acumuladorDatos = "";
-                        while(!var.isEmpty()){
-                                acumuladorDatos = var.pop() + acumuladorDatos;
+                        String  acumuladorDatos = "";
+                        int     clave = 0;
+                        boolean error = false;
+                        Stack   expresion = new Stack();
+                        boolean noVariable = false;
+            Stack   pilacontrol = new Stack();
+                        Stack   pilatemp = new Stack();
+                        boolean pilavacia;
+                        int     tamanoVar;
+                        String  valorGuardado[] = new String[6];
+                        String  valorTemp[] = new String[6];
+                        String  VarId;
+                        try{
+                                while(true){
+                                        acumuladorDatos = ( String ) var.pop();
+                                        //System.out.print(" "+acumuladorDatos);
+                                        expresion.push(acumuladorDatos);
+                                }
+                        }catch (EmptyStackException e) {
+                                System.out.println("");
+                                System.out.println("error");
                         }
-                        System.out.println(acumuladorDatos+";");
+                        System.out.println("");
+                        for(int i = 0; i<expresion.size(); i++ ){
+                                System.out.print(" "+expresion.elementAt(i));
+                        }
+                        System.out.println("");
+                        System.out.println(expresion.elementAt(0));
+
+                        VarId = ( String ) expresion.elementAt(0);
+                        valorGuardado = BuscarId(VarId);
+                        System.out.println(valorGuardado[0]);
+                        System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
+                        System.out.println(valorGuardado[4]+" - "+valorGuardado[5]);
+
+                        if(valorGuardado[0] != null || valorGuardado[0] != ""){
+
+                                if(valorGuardado[2] == "Arreglo"){
+
+                                        System.out.println(" Arreglo ");
+                                        String numArray = "";
+                                        try {
+
+                                                numArray = ( String ) expresion.elementAt(2);
+                                                int convertir = Integer.parseInt(numArray);
+
+                                        } catch (NumberFormatException e) {
+                                                error = true;
+                                                valorTemp = BuscarId(numArray);
+                                                if(valorTemp[0] != null){
+
+                                                        if(valorTemp[0] != valorGuardado[0]){
+                                                                System.out.println("**Error variable "+valorTemp[1]+" no compatible**");
+                                                        }
+
+                                                }
+                                                else{
+                                                         System.out.println("**Error la variable"+valorTemp[1]+" no esta previamente declarada**");
+                                                }
+
+                                        }finally{
+                                                if(!error){
+                                                        BuscarError(valorGuardado[2], expresion);
+                                                }
+                                        }
+
+                                }
+                                else{
+                                        System.out.println(" Variable ");
+                                }
+                        }else{
+                System.out.println("**Error variable no declarada**");
+            }
+
+
+
+                }
+
+                public static String[] BuscarId(String Id){
+                        int     clave = 0;
+                        int     nL = Id.length();
+            Stack   pilatemp = new Stack();
+            Stack   pilacontrol = new Stack();
+                        boolean pilavacia;
+                        String  retorno[] = new String [6];
+
+            for(int i = 0; i < nL ; i++){
+                char character = Id.charAt(i); // start on the first character
+                int ascii = (int) character; //convert the first character
+                clave = clave+ascii;
+            }
+
+            pilatemp = (Stack) contenedor.get(clave);
+            pilavacia = pilatemp == null;
+
+            if(!pilavacia){
+
+                pilacontrol = (Stack) contenedor.get(clave);
+                for (int i = 0; i < pilacontrol.size(); i++) {
+                    String dato[] = (String []) pilacontrol.elementAt(i);
+                    if(dato[1].equals(Id)){
+                                                System.out.println(" Encontrado ");
+                        retorno[0] = dato[0];
+                                                retorno[1] = dato[1];
+                                                retorno[2] = dato[2];
+                                                retorno[3] = dato[3];
+                                                retorno[4] = dato[4];
+                                                retorno[5] = dato[5];
+                        i = pilacontrol.size();
+                                                return retorno;
+                    }
+                }
+
+            }
+                        else{
+                                System.out.println(" No hay tortillas ");
+                        }
+                        return retorno;
+                }
+
+                public static void BuscarError(String TipoEspecifico, Stack expresion){
+                        String arregloTemp [] = new String[6];
+
+                }
+
+                public static void tipo(){
+
+                        // switch (valorGuardado[2]) {
+                        // 		case "Arreglo":
+
+                        // 			break;
+                        // 		case "Varible":
+
+                        // 			break;
+                        // 		case "Funcion":
+
+                        // 			break;
+                        // 		default:
+                        // 			throw new AssertionError();
+                        // 	}
                 }
 
                 public static void DescargarPilaCadena(){
@@ -270,8 +407,9 @@
     jj_consume_token(Id);
                cadena.push(token.image);
     param_P();
-                if(token.image == null){cadena.push("Varible"); cadena.push("1");}
-                else{cadena.push("Arreglo"); cadena.push("-");}
+                    System.out.println("token == "+token.image);
+                if(token.image == null){ cadena.push("Arreglo"); cadena.push("-");  }
+                else{ cadena.push("Varible"); cadena.push("1"); }
                 cadena.push("Local"); DescargarPilaCadena();
   }
 
@@ -374,6 +512,7 @@
     case Id:
       expression();
       jj_consume_token(Op_Punto_Coma);
+                                     DescargarPila(); System.out.println("<--------->\u005cn");
       break;
     case Op_Punto_Coma:
       jj_consume_token(Op_Punto_Coma);
@@ -659,9 +798,12 @@
 //---27
   static final public void call() throws ParseException {
     jj_consume_token(Id);
+               var.push(token.image);
     jj_consume_token(Op_Parentesis_Izq);
+                             var.push(token.image);
     args();
     jj_consume_token(Op_Parentesis_Der);
+                             var.push(token.image);
   }
 
 //---28
@@ -698,6 +840,7 @@
         break label_13;
       }
       jj_consume_token(Op_Coma);
+                                                                  var.push(token.image);
       expression();
       arg_list_P();
     }
@@ -799,6 +942,172 @@
     try { return !jj_3_14(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(13, xla); }
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_43() {
+    if (jj_3R_30()) return true;
+    if (jj_scan_token(Id)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_30() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(12)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(17)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(11)) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_26() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(21)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(22)) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_28() {
+    if (jj_scan_token(Id)) return true;
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    if (jj_3R_61()) return true;
+    if (jj_scan_token(Op_Parentesis_Der)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_45() {
+    if (jj_scan_token(Op_Corchete_Izq)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_31() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_44()) {
+    jj_scanpos = xsp;
+    if (jj_3R_45()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_44() {
+    if (jj_scan_token(Op_Punto_Coma)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_42() {
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_13() {
+    if (jj_3R_28()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_41() {
+    if (jj_scan_token(Num_Decimal)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_29() {
+    if (jj_3R_43()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_40() {
+    if (jj_scan_token(Num_Entero)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_15() {
+    if (jj_3R_30()) return true;
+    if (jj_scan_token(Id)) return true;
+    if (jj_3R_31()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_27() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_39()) {
+    jj_scanpos = xsp;
+    if (jj_3R_40()) {
+    jj_scanpos = xsp;
+    if (jj_3R_41()) {
+    jj_scanpos = xsp;
+    if (jj_3_13()) {
+    jj_scanpos = xsp;
+    if (jj_3R_42()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_39() {
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(Op_Parentesis_Der)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_2() {
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_14() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3R_29()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_24() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(19)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(20)) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_12() {
+    if (jj_3R_26()) return true;
+    if (jj_3R_27()) return true;
+    if (jj_3R_60()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_60() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_12()) { jj_scanpos = xsp; break; }
+    }
+    return false;
   }
 
   static private boolean jj_3R_25() {
@@ -1062,12 +1371,6 @@
     return false;
   }
 
-  static private boolean jj_3R_17() {
-    if (jj_3R_30()) return true;
-    if (jj_scan_token(Id)) return true;
-    return false;
-  }
-
   static private boolean jj_3_14() {
     if (jj_scan_token(Op_Coma)) return true;
     if (jj_3R_21()) return true;
@@ -1084,12 +1387,6 @@
     return false;
   }
 
-  static private boolean jj_3_4() {
-    if (jj_scan_token(Op_Coma)) return true;
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_63() {
     if (jj_3R_21()) return true;
     if (jj_3R_64()) return true;
@@ -1098,6 +1395,12 @@
 
   static private boolean jj_3R_62() {
     if (jj_3R_63()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    if (jj_3R_30()) return true;
+    if (jj_scan_token(Id)) return true;
     return false;
   }
 
@@ -1110,174 +1413,14 @@
     return false;
   }
 
-  static private boolean jj_3R_16() {
+  static private boolean jj_3_4() {
+    if (jj_scan_token(Op_Coma)) return true;
     if (jj_3R_17()) return true;
     return false;
   }
 
-  static private boolean jj_3R_28() {
-    if (jj_scan_token(Id)) return true;
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    if (jj_3R_61()) return true;
-    if (jj_scan_token(Op_Parentesis_Der)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_3() {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_43() {
-    if (jj_3R_30()) return true;
-    if (jj_scan_token(Id)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_1() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_30() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(12)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(17)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(11)) return true;
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_26() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(21)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(22)) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_45() {
-    if (jj_scan_token(Op_Corchete_Izq)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_31() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_44()) {
-    jj_scanpos = xsp;
-    if (jj_3R_45()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_44() {
-    if (jj_scan_token(Op_Punto_Coma)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_42() {
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_13() {
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_41() {
-    if (jj_scan_token(Num_Decimal)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_29() {
-    if (jj_3R_43()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_40() {
-    if (jj_scan_token(Num_Entero)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_15() {
-    if (jj_3R_30()) return true;
-    if (jj_scan_token(Id)) return true;
-    if (jj_3R_31()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_27() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_39()) {
-    jj_scanpos = xsp;
-    if (jj_3R_40()) {
-    jj_scanpos = xsp;
-    if (jj_3R_41()) {
-    jj_scanpos = xsp;
-    if (jj_3_13()) {
-    jj_scanpos = xsp;
-    if (jj_3R_42()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_39() {
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    if (jj_3R_21()) return true;
-    if (jj_scan_token(Op_Parentesis_Der)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_2() {
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_14() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3R_29()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_24() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(19)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(20)) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3_12() {
-    if (jj_3R_26()) return true;
-    if (jj_3R_27()) return true;
-    if (jj_3R_60()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_60() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_12()) { jj_scanpos = xsp; break; }
-    }
+  static private boolean jj_3R_16() {
+    if (jj_3R_17()) return true;
     return false;
   }
 
