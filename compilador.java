@@ -82,13 +82,13 @@
                         boolean error = false;
                         Stack   expresion = new Stack();
                         boolean noVariable = false;
-            Stack   pilacontrol = new Stack();
-                        Stack   pilatemp = new Stack();
                         boolean pilavacia;
                         int     tamanoVar;
                         String  valorGuardado[] = new String[6];
                         String  valorTemp[] = new String[6];
                         String  VarId;
+                        System.out.print(" tamano "+var.size());
+
                         try{
                                 while(true){
                                         acumuladorDatos = ( String ) var.pop();
@@ -100,9 +100,6 @@
                                 System.out.println("error");
                         }
                         System.out.println("");
-                        for(int i = 0; i<expresion.size(); i++ ){
-                                System.out.print(" "+expresion.elementAt(i));
-                        }
                         System.out.println("");
                         System.out.println(expresion.elementAt(0));
 
@@ -150,6 +147,10 @@
                         }else{
                 System.out.println("**Error variable no declarada**");
             }
+
+                        while(!expresion.isEmpty()){
+                                expresion.pop();
+                        }
 
 
 
@@ -512,7 +513,7 @@
     case Id:
       expression();
       jj_consume_token(Op_Punto_Coma);
-                                     DescargarPila(); System.out.println("<--------->\u005cn");
+                                      if(!var.isEmpty()){DescargarPila(); System.out.println("<--------->\u005cn");}
       break;
     case Op_Punto_Coma:
       jj_consume_token(Op_Punto_Coma);

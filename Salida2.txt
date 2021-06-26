@@ -4,10 +4,10 @@ token == low
 token == high
 
 <------->
-
+ tamano 3
 error
 
- low = k
+
 low
  Encontrado 
 int
@@ -17,7 +17,319 @@ int - low - Varible - 1 - Local
 
 
 <------->
-
+ tamano 6
 error
 
 
+]
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+high
+ Encontrado 
+int
+int - high - Varible - 1 - Local
+ Variable 
+<--------->
+
+
+<------->
+ tamano 6
+error
+
+
+x
+ Encontrado 
+int
+int - x - Arreglo - 10 - Global
+ Arreglo 
+ No hay tortillas 
+**Error la variablenull no esta previamente declarada**
+<--------->
+
+
+<------->
+ tamano 6
+error
+
+
+]
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+i
+ Encontrado 
+int
+int - i - Varible - 1 - Local
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+token == ]
+token == low
+token == high
+
+<------->
+ tamano 3
+error
+
+
+low
+ Encontrado 
+int
+int - low - Varible - 1 - Local
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 10
+error
+
+
+)
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 6
+error
+
+
+]
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 9
+error
+
+
+]
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 6
+error
+
+
+t
+ Encontrado 
+int
+int - t - Varible - 1 - Local
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+0
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+10
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 8
+error
+
+
+)
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 8
+error
+
+
+)
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+0
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 3
+error
+
+
+10
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 7
+error
+
+
+)
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+
+<------->
+ tamano 5
+error
+
+
+1
+ No hay tortillas 
+null
+null - null - null - null - null
+ Variable 
+<--------->
+
+hashtable valores: int  	minloc			Funcion	null	1	Clase
+hashtable valores: void  	sort			Funcion	null	1	Clase
+hashtable valores: int  	low			Varible	null	1	Local
+hashtable valores: int  	low			Varible	null	1	Local
+hashtable valores: int  	k			Varible	null	1	Local
+hashtable valores: int  	k			Varible	null	1	Local
+hashtable valores: int  	i			Varible	null	1	Local
+hashtable valores: int  	i			Varible	null	1	Local
+hashtable valores: void  	main			Funcion	null	1	Clase
+hashtable valores: int  	a			Varible	null	1	Local
+hashtable valores: int  	a			Varible	null	1	Local
+hashtable valores: int  	x			Varible	null	1	Local
+hashtable valores: int  	x			Arreglo	null	10	Global
+hashtable valores: int  	high			Varible	null	1	Local
+hashtable valores: int  	high			Varible	null	1	Local
+hashtable valores: int  	t			Varible	null	1	Local

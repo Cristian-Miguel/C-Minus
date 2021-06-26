@@ -89,14 +89,14 @@ PARSER_BEGIN(compilador)
 			int     clave = 0;
 			boolean error = false;
 			Stack   expresion = new Stack();
-			boolean noVariable = false; 
-            Stack   pilacontrol = new Stack();
-			Stack   pilatemp = new Stack();
+			boolean noVariable = false;
 			boolean pilavacia;
 			int     tamanoVar;
 			String  valorGuardado[] = new String[6]; 
-			String  valorTemp[] = new String[6]; 
+			String  valorTemp[] = new String[6];
 			String  VarId;
+			System.out.print(" tamano "+var.size());
+
 			try{
 				while(true){
 					acumuladorDatos = ( String ) var.pop();
@@ -108,9 +108,6 @@ PARSER_BEGIN(compilador)
 				System.out.println("error");
 			}
 			System.out.println("");
-			for(int i = 0; i<expresion.size(); i++ ){
-				System.out.print(" "+expresion.elementAt(i));
-			}
 			System.out.println("");
 			System.out.println(expresion.elementAt(0));
 
@@ -158,6 +155,10 @@ PARSER_BEGIN(compilador)
 			}else{
                 System.out.println("**Error variable no declarada**");
             }
+
+			while(!expresion.isEmpty()){
+				expresion.pop();
+			}
 
 
 			
@@ -418,7 +419,7 @@ void statement() :{}
 //---14
 void expression_stmt() :{}	
 {	  
-	expression() <Op_Punto_Coma>{DescargarPila(); System.out.println("<--------->\n");}
+	expression() <Op_Punto_Coma>{ if(!var.isEmpty()){DescargarPila(); System.out.println("<--------->\n");} }
 	| <Op_Punto_Coma> 									
 } 
 
