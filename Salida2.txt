@@ -5,177 +5,178 @@ Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
 Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  x == x  <-----------------
 		**Error variable "x" ya declarada**
-Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <-------------------->
  k = low;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  x = a [ low ];
-**Error la variable x no es compatible**
-<-------------------->
+**Error la variable "x" no es compatible**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = low + 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i < high;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  a [ i ] < x;
-**Error variable x no compatible**
-<-------------------->
+**Error variable "x" no compatible**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  x = a [ i ];
-**Error la variable x no es compatible**
-<-------------------->
+**Error la variable "x" no es compatible**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  k = i;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = i + 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 <----------Return---------->
 Return ->  tipo Especifico = int
-Id = minloc
  minloc = k;
+
+<-------------------->
+ minloc = k;
+<-------------------->
+
 <----------Fin-Return---------->
 
 
-<-------------------->
- minloc = k;
-<-------------------->
-
 Tipo = void	Id = sort	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
 		----------------->  a == a  <-----------------
 		**Error variable "a" ya declarada**
-Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
+Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  low == low  <-----------------
 		**Error variable "low" ya declarada**
-Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  high == high  <-----------------
 		**Error variable "high" ya declarada**
-Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  i == i  <-----------------
 		**Error variable "i" ya declarada**
-Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  k == k  <-----------------
 		**Error variable "k" ya declarada**
-Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <-------------------->
  i = low;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i < high - 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 Tipo = int	Id = t	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <-------------------->
  k = minloc ( a , i , high );
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  t = a [ k ];
-<-------------------->
+**Error variable "k" no compatible**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  a [ k ] = a [ i ];
-<-------------------->
+**Error variable "i" no compatible**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  a [ i ] = t;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = i + 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		----------------->  i == i  <-----------------
 		**Error variable "i" ya declarada**
-Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <-------------------->
  i = 0;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i < 10;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  x [ i ] = input ( );
  No hay tortillas 
 **Error variable "input" no se encuentra declarada**
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = i + 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  sort ( x , 0 , 10 );
-**Error variable "x" no compatible**
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = 0;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i < 10;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  output ( x [ i ] );
  No hay tortillas 
-**Error variable no declarada**
-<-------------------->
+**Error variable "output" no declarada**
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  i = i + 1;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
-hashtable valores: int  	minloc			Funcion	null	1	Clase
-hashtable valores: void  	sort			Funcion	null	1	Clase
-hashtable valores: int  	low			Varible	null	1	Local
-hashtable valores: int  	k			Varible	null	1	Local
-hashtable valores: int  	i			Varible	null	1	Local
-hashtable valores: void  	main			Funcion	null	1	Clase
-hashtable valores: int  	a			Arreglo	null	-	Local
-hashtable valores: int  	x			Arreglo	null	10	Global
-hashtable valores: int  	high			Varible	null	1	Local
-hashtable valores: int  	t			Varible	null	1	Local
+hashtable valores: int	minloc 			Funcion	null	1	Clase
+hashtable valores: void	sort 			Funcion	null	1	Clase
+hashtable valores: int	low 			Varible	null	1	Local
+hashtable valores: int	k 			Varible	null	1	Local
+hashtable valores: int	i 			Varible	null	1	Local
+hashtable valores: void	main 			Funcion	null	1	Clase
+hashtable valores: int	a 			Arreglo	null	-	Local
+hashtable valores: int	x 			Arreglo	null	10	Global
+hashtable valores: int	high 			Varible	null	1	Local
+hashtable valores: int	t 			Varible	null	1	Local

@@ -29,17 +29,13 @@ PARSER_BEGIN(compilador)
 				resultados = (Stack) enumeration.nextElement();
 				for(int i = 0; i < resultados.size()+1; i++){
 					resultadosSt = (String[]) resultados.pop();
-				System.out.print("hashtable valores: " + resultadosSt[0]+"  \t"+resultadosSt[1]+"\t\t\t"+resultadosSt[2]);
+				System.out.print("hashtable valores: " + resultadosSt[0]+"\t"+resultadosSt[1]+" \t\t\t"+resultadosSt[2]);
 				System.out.println("\t"+resultadosSt[3]+"\t"+resultadosSt[4]+"\t"+resultadosSt[5]);
 				}
 			}
 		}
 
 		public static void GenerarHash(String Id[]){
-			//System.out.print("Tipo = "+Id[0]+" Id = "+Id[1]);
-			//System.out.print(" Estructura = "+Id[2]+"Valor = "+Id[3]);
-			//System.out.println(" Tamano = "+Id[4]+"Posicion = "+Id[5]);
-
 			//se guardara en un arreglo con la siguiente estructura
 			// 0       1        2         3       4       5
 			//Tipo    ID    Estructura  Valor  tamano  posicion
@@ -49,19 +45,18 @@ PARSER_BEGIN(compilador)
             Stack pilatemp = new Stack();
             Stack pilacontrol = new Stack();
             int clave = 0;
+			//Generamos el codigo hash para guardarlo en la 
+			//tabla hash
             for(int i = 0; i < nL ; i++){   
-                char character = Id[1].charAt(i); // start on the first character
-                int ascii = (int) character; //convert the first character
+                char character = Id[1].charAt(i); 
+                int ascii = (int) character; 
                 clave = clave+ascii; 
             }
-            //System.out.println("clave = "+clave);
             pilatemp = (Stack) contenedor.get(clave);
             boolean pilavacia = pilatemp == null;
             
             if(!pilavacia){
                 pilacontrol = (Stack) contenedor.get(clave);
-                //System.out.println("---------> 1");
-                //System.out.println("pilacontrol = "+pilacontrol.size()+" pilatemp = "+pilatemp.size());
 				int i = 0;
                 for (i = 0; i < pilacontrol.size(); i++) {
                     String dato[] = (String []) pilacontrol.elementAt(i);
@@ -77,7 +72,6 @@ PARSER_BEGIN(compilador)
 				}
 
             }else{
-                //System.out.println("---------> 2");
                 pilacontrol.push(Id);
                 contenedor.put(clave, pilacontrol);
             }
@@ -99,13 +93,10 @@ PARSER_BEGIN(compilador)
        
 				for (int i = 0; i < var.size(); i++) {
 					acumuladorDatos = ( String ) var.elementAt(i);
-					//System.out.print(" "+acumuladorDatos);
 					expresion.push(acumuladorDatos);
 				}
 				
-			} catch (EmptyStackException e) {System.out.println(";");}
-
-			//System.out.println("");    
+			} catch (EmptyStackException e) {}
 			for (int i = 0; i < expresion.size(); i++) {
 				System.out.print(" "+expresion.elementAt(i));
 			}
@@ -116,8 +107,6 @@ PARSER_BEGIN(compilador)
 			VarId = ( String ) expresion.elementAt(0);
 			valorGuardado = BuscarId(VarId);
 
-			//System.out.print(valorGuardado[0]+" - "+valorGuardado[1]+" - "+valorGuardado[2]+" - ");
-			//System.out.println(valorGuardado[3]+" - "+valorGuardado[4]+" - "+valorGuardado[5]);
 			//si se encontro el dato se hase lo siguiente
 			if( valorGuardado[0] != null ){
 				
@@ -131,11 +120,19 @@ PARSER_BEGIN(compilador)
 
 						numArray = ( String ) expresion.elementAt(1);
 						if(!numArray.equals("=")){
+
 							numArray = ( String ) expresion.elementAt(2);
 							int convertir = Integer.parseInt(numArray);
-						}else{
-							System.out.println("**Error la variable "+expresion.elementAt(0)+" no es compatible**");
-						}
+							if(!valorGuardado[4].equals("-")){
+								
+								int comparar = Integer.parseInt(valorGuardado[4]);
+								if(comparar < convertir ){
+									System.out.println("**Error de desbordamiento de arreglo**");	
+								}
+
+							}
+							
+						}else{ System.out.println("**Error la variable \""+expresion.elementAt(0)+"\" no es compatible**"); }
 
 					} catch (NumberFormatException e) {
 
@@ -147,24 +144,22 @@ PARSER_BEGIN(compilador)
 
 							//si el tipo es diferente de manda un error
 							if(!valorTemp[0].equals(valorGuardado[0])){
-								System.out.println("**Error variable "+valorTemp[1]+" no compatible**");
+								System.out.println("**Error variable \""+valorTemp[1]+"\" no compatible**");
 							}else{
-								//System.out.println("^^^  "+expresion.elementAt(5)+"  ^^^");
 								BuscarError(valorGuardado[0], expresion, 5);
 							}
 
 						}
-						else{ System.out.println("**Error la variable"+valorTemp[1]+" no esta previamente declarada**"); }
+						else{ System.out.println("**Error la variable \""+valorTemp[1]+"\" no esta previamente declarada**"); }
 						
 					}
 
 				}else{
-					//System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
 					BuscarError(valorGuardado[0], expresion, 2); 
 					
 				}
 			}else{
-                System.out.println("**Error variable no declarada**");
+                System.out.println("**Error variable \""+VarId+"\" no declarada**");
             }
 
 			while(!expresion.isEmpty()){ expresion.pop();}
@@ -197,7 +192,6 @@ PARSER_BEGIN(compilador)
                     String dato[] = (String []) pilacontrol.elementAt(i);
                     if(dato[1].equals(Id)){
 
-						//System.out.println(" Encontrado ");
                         retorno[0] = dato[0];  
 						retorno[1] = dato[1];  
 						retorno[2] = dato[2];  
@@ -228,31 +222,44 @@ PARSER_BEGIN(compilador)
 
 				String arregloTemp [] = new String[6];
 				String base =  ( String ) expresion.elementAt(posicion);
-				//System.out.println("  base = "+base);
 				//provocamos un error si hay una varible,
 				//si no lo es prosigue con su evaluacion.
 				try {
-					int convertir = Integer.parseInt(base);
+
 					if(TipoEspecifico.equals("int")){
-						int i = 0;
+
+						int i = 0; boolean DatoFloat = false;
 						for (i = 0; i < base.length(); i++) {
 							char character = base.charAt(i);
 							if(character == '.'){
-								System.out.println("**Error Valores Flotantes no Acceptados**");
+								DatoFloat=true;
 								i = base.length()+1;
-								posicion = expresion.size();
 							}
 						}
-						if(i != base.length()+2){ posicion += 2; }
-					}else{
+
+						if(DatoFloat){
+							posicion = expresion.size();
+						}else{
+							int convertir = Integer.parseInt(base);
+							posicion += 2;
+						}
+
+					}
+					else if(TipoEspecifico.equals("real")){
+
+						double convertir = Double.parseDouble(base);
+						posicion += 2;
+
+					}
+					else{
 						posicion += 2;
 					}
+
 				} catch (NumberFormatException e) {
 					
 					arregloTemp = BuscarId(base);
-					//System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
 					if(arregloTemp[0] != null){
-						//System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
+
 						if(arregloTemp[0].equals(TipoEspecifico)){
 							
 							int comparacion = tipo(arregloTemp[2], expresion, posicion);
@@ -260,7 +267,6 @@ PARSER_BEGIN(compilador)
 								posicion = expresion.size();
 							}else{
 								posicion += comparacion;
-								//System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
 							}
 							
 						}else{
@@ -286,28 +292,37 @@ PARSER_BEGIN(compilador)
 			
 			String arregloTemp[] = new String[6];
 			String variableTemp;
-			//System.out.println("  \tEstructura = "+Estructura+" posicion = "+posicion);
 			switch (Estructura) {
 					case "Arreglo":
 						
-						//System.out.println("\t tamano"+expresion.size()+" -------Datos");
 						if((posicion+1) < expresion.size()){
+
 							variableTemp =  ( String ) expresion.elementAt(posicion+1);
-							//System.out.println("\t"+expresion.elementAt(posicion+1)+" -------Datos");
 							if(variableTemp.equals("[")){
 								variableTemp =  ( String ) expresion.elementAt(posicion+2);
-								//System.out.println("  variableTemp = "+variableTemp);
 								try {
+
 									int convertir = Integer.parseInt(variableTemp);
+									variableTemp = ( String )expresion.elementAt(posicion);
+									arregloTemp = BuscarId(variableTemp);
+									if(!arregloTemp.equals("-")){
+								
+										int comparar = Integer.parseInt(arregloTemp[4]);
+										if(comparar < convertir ){
+											System.out.println("**Error de desbordamiento de arreglo**");	
+										}
+
+									}
+
 								}catch (NumberFormatException e) {
 
 									arregloTemp = BuscarId(variableTemp);
 									if(arregloTemp[0] == null || arregloTemp[0].equals("")){
-										//System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+										System.out.println("**Error variable \""+arregloTemp[1]+"\" no compatible**");
 									}else{
 
 										if(!Estructura.equals(arregloTemp[0])){
-											//System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+											System.out.println("**Error variable \""+arregloTemp[1]+"\" no compatible**");
 											return 0;
 										}
 
@@ -315,20 +330,18 @@ PARSER_BEGIN(compilador)
 
 								}
 							}else{ 
-								System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
+								System.out.println("**Error variable \""+expresion.elementAt(posicion)+"\" no compatible**");
 								return 0;
 							}
 						}else{ 
-								System.out.println("**Error variable "+expresion.elementAt(posicion)+" no compatible**");
+								System.out.println("**Error variable \""+expresion.elementAt(posicion)+"\" no compatible**");
 								return 0;
 							}
 						return 4;
 
 					case "Varible":
-						//System.out.println("  variable");
 						return 2;
 					case "Funcion":
-						//System.out.println("  funcion");
 						int datos = 0;
 						for(int i = posicion; i<expresion.size(); i++){
 							
@@ -349,8 +362,6 @@ PARSER_BEGIN(compilador)
 		}
 
 		public static void DescargarPilaCadena(){
-			//System.out.println("");
-			//System.out.println("<------->");
 
 			String acumuladorDatos[] = new String [6];
 			acumuladorDatos[5] = (String) cadena.pop();
@@ -362,10 +373,11 @@ PARSER_BEGIN(compilador)
 			while(!var.isEmpty()){
 				var.pop();
 			}
-			GenerarHash(acumuladorDatos);
 			System.out.print("Tipo = "+acumuladorDatos[0]+"\tId = "+acumuladorDatos[1]);
 			System.out.print("\tEstructura = "+acumuladorDatos[2]+"\tValor = "+acumuladorDatos[3]);
 			System.out.println("\tTamano = "+acumuladorDatos[4]+"\tPosicion = "+acumuladorDatos[5]);
+			GenerarHash(acumuladorDatos);
+			
 		}
 
 		public static void FuncionesReturn(){
@@ -395,10 +407,10 @@ PARSER_BEGIN(compilador)
 				acumuladorDatos = ( String ) var.elementAt(i);
 				System.out.print(" "+acumuladorDatos);
 			}
-			System.out.println(";\n<----------Fin-Return---------->\n");
+			System.out.println(";");
 			DescargarPila();
 			System.out.println("<-------------------->\n");
-			//while(!var.isEmpty()){ var.pop();}
+			System.out.println("<----------Fin-Return---------->\n\n");
 		}
 
 	}
@@ -572,7 +584,7 @@ void statement() :{}
 //---14
 void expression_stmt() :{}	
 {	  
-	expression() <Op_Punto_Coma>{ if(!var.isEmpty()){DescargarPila(); System.out.println("<-------------------->\n");} }
+	expression() <Op_Punto_Coma>{ if(!var.isEmpty()){DescargarPila(); System.out.println("<---------- Fin-Operacion ---------->\n");} }
 	| <Op_Punto_Coma> 									
 } 
 
@@ -580,7 +592,7 @@ void expression_stmt() :{}
 void selection_stmt() :{} 	
 {	
 	<Res_if> <Op_Parentesis_Izq> 
-	expression() { DescargarPila(); System.out.println("<-------------------->"); System.out.println("");}
+	expression() { DescargarPila(); System.out.println("<---------- Fin-Operacion ---------->"); System.out.println("");}
 	<Op_Parentesis_Der> statement() selection_stmt_P() 
 } 
 void selection_stmt_P() :{} 	{	( LOOKAHEAD(2) <Res_else> statement() )*						} 
@@ -589,7 +601,7 @@ void selection_stmt_P() :{} 	{	( LOOKAHEAD(2) <Res_else> statement() )*						}
 void iteration_stmt() :{} 	
 {	
 	<Res_while> <Op_Parentesis_Izq> 
-	expression() { DescargarPila(); System.out.println("<-------------------->"); System.out.println("");}
+	expression() { DescargarPila(); System.out.println("<---------- Fin-Operacion ---------->"); System.out.println("");}
 	<Op_Parentesis_Der> statement()		
 } 
 
@@ -601,17 +613,17 @@ void return_stmt_P() :{}
 	| expression() <Op_Punto_Coma> { FuncionesReturn(); }							
 }
 
-//---18->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//---18
 void expression() :{ /*System.out.println("---> funcion expression <---");*/ } 		
 {	  
 	LOOKAHEAD(8) var(){  }
 	<Op_Asignacion> { var.push(token.image); }
-	expression()     { DescargarPila(); System.out.println("<-------------------->\n"); }		
+	expression()     { DescargarPila(); System.out.println("<---------- Fin-Operacion ---------->\n"); }		
 	| simple_expression() 									
 }
 
-//---19--------------------------------------------------------------------------------------------------------
-void var() :{ /*System.out.println("---> funcion variable <---");*/ } 			
+//---19
+void var() :{} 			
 {	
 	<Id>{ var.push(token.image); } var_P()									
 }
@@ -621,7 +633,6 @@ void var_P() :{}
 	expression() {  }
 	<Op_Corchete_Der>{ var.push(token.image); } )*			
 } 
-//------------------------------------------------------------------------------------------------------------
 
 //---20
 void simple_expression() :{}	{	additive_expression() simple_expression_P()						}
@@ -654,25 +665,24 @@ void additive_expression_P() :{}
 //---23
 void addop() :{}{	<Op_Suma> | <Op_Resta>									}
 
-//---24---------------------recursividad a la izquierda>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-void term() :{ /*System.out.println("---> funcion term <---");*/ } 		
+//---24---------------------recursividad a la izquierda
+void term() :{} 		
 {	
 	factor(){  } 
 	term_P() {  }								
 }
-void term_P() :{ /*System.out.println("---> funcion term_P <---");*/ } 		
+void term_P() :{} 		
 {	
 	( LOOKAHEAD(2) mulop(){ var.push(token.image); } 
 	factor(){  } 
 	term_P() )*						
 }
-//---------------------------------------------------------------------------------------------------------------------------------
 
 //---25
 void mulop() :{} {	<Op_Mult> | <Op_Div> 									}
 
 //---26
-void factor() :{ /*System.out.println("---> funcion factor <---");*/ } 		
+void factor() :{} 		
 {	  
 	<Op_Parentesis_Izq> expression() <Op_Parentesis_Der> 	 
 	| <Num_Entero>  { var.push(token.image); }	    
@@ -691,7 +701,7 @@ void call() :{}
 }
 
 //---28
-void args() :{} 		{	( arg_list() )*										}
+void args() :{}{( arg_list() )*	}
 
 //---29---------------------recursividad a la izquierda
 void arg_list() :{} 		{	expression() arg_list_P()								}

@@ -5,29 +5,29 @@ Tipo = int	Id = v	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
 <-------------------->
  v == 0;
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 <----------Return---------->
 Return ->  tipo Especifico = int
-Id = gcd
  gcd = u;
-<----------Fin-Return---------->
-
 
 <-------------------->
  gcd = u;
 <-------------------->
 
-<----------Return---------->
-Return ->  tipo Especifico = int
-Id = gcd
- gcd = gcd ( v , u - u / v * v );
 <----------Fin-Return---------->
 
 
+<----------Return---------->
+Return ->  tipo Especifico = int
+ gcd = gcd ( v , u - u / v * v );
+
 <-------------------->
  gcd = gcd ( v , u - u / v * v );
 <-------------------->
+
+<----------Fin-Return---------->
+
 
 Encontre un comentario de muchas lineas
 Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
@@ -38,25 +38,25 @@ Tipo = int	Id = y	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
  x = input ( );
  No hay tortillas 
 **Error variable "input" no se encuentra declarada**
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  y = input ( );
  No hay tortillas 
 **Error variable "input" no se encuentra declarada**
-<-------------------->
+<---------- Fin-Operacion ---------->
 
 
 <-------------------->
  output ( gcd ( x , y ) );
  No hay tortillas 
-**Error variable no declarada**
-<-------------------->
+**Error variable "output" no declarada**
+<---------- Fin-Operacion ---------->
 
-hashtable valores: int  	x			Varible	null	1	Local
-hashtable valores: int  	v			Varible	null	1	Local
-hashtable valores: int  	u			Varible	null	1	Local
-hashtable valores: int  	gcd			Funcion	null	1	Clase
-hashtable valores: void  	main		Funcion	null	1	Clase
-hashtable valores: int  	y			Varible	null	1	Local
+hashtable valores: int	x 			Varible	null	1	Local
+hashtable valores: int	v 			Varible	null	1	Local
+hashtable valores: int	u 			Varible	null	1	Local
+hashtable valores: int	gcd 			Funcion	null	1	Clase
+hashtable valores: void	main 			Funcion	null	1	Clase
+hashtable valores: int	y 			Varible	null	1	Local
