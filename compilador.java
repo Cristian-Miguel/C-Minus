@@ -9,6 +9,7 @@
                 static Hashtable contenedor = new Hashtable();
                 static Stack cadena = new Stack();
                 static Stack var = new Stack();
+                static String tipoTemp, IdTem;
 
                 public static void main(String args[]) throws ParseException {
                         compilador analizador = new compilador(System.in);
@@ -77,7 +78,7 @@
 
                 public static void DescargarPila(){
                         System.out.println("");
-                        System.out.println("<------->");
+                        System.out.println("<-------------------->");
 
                         String  acumuladorDatos = "";
                         boolean error = false;
@@ -150,7 +151,6 @@
                                         }
 
                                 }else{
-                                        System.out.println(" No es Nulo Var");
                                         //System.out.println("^^^  "+expresion.elementAt(2)+"  ^^^");
                                         BuscarError(valorGuardado[0], expresion, 2);
 
@@ -247,20 +247,16 @@
                                                 //System.out.println("  "+arregloTemp[0]+" == "+TipoEspecifico);
                                                 if(arregloTemp[0].equals(TipoEspecifico)){
 
-                                                        //System.out.println("  comparacion == 0");
                                                         int comparacion = tipo(arregloTemp[2], expresion, posicion);
-                                                        //System.out.println("  "+comparacion+" == 0");
-
                                                         if(comparacion == 0){
                                                                 posicion = expresion.size();
                                                         }else{
-                                                                //System.out.println("  posicion = "+posicion);
                                                                 posicion += comparacion;
                                                                 //System.out.println("  posicion = "+posicion+" comparacion = "+comparacion);
                                                         }
 
                                                 }else{
-                                                        System.out.println("**Error variable "+arregloTemp[1]+" no compatible**");
+                                                        System.out.println("**Error variable \u005c""+arregloTemp[1]+"\u005c" no compatible**");
                                                         posicion = expresion.size()+1;
                                                 }
                                         }else{
@@ -364,6 +360,40 @@
                         System.out.println("\u005ctTamano = "+acumuladorDatos[4]+"\u005ctPosicion = "+acumuladorDatos[5]);
                 }
 
+                public static void FuncionesReturn(){
+                        System.out.println("<----------Return---------->\u005cnReturn ->  tipo Especifico = "+tipoTemp);
+                        System.out.println("Id = "+IdTem);
+                        Stack Temp = new Stack();
+
+                        String acumuladorDatos;
+
+                        try {
+
+                                while(true){
+                                        acumuladorDatos = ( String ) var.pop();
+                                        Temp.push(acumuladorDatos);
+                                }
+
+                        } catch (EmptyStackException e) {}
+                        Temp.push("="); Temp.push(IdTem);
+                        try {
+
+                                while(true){
+                                        acumuladorDatos = ( String ) Temp.pop();
+                                        var.push(acumuladorDatos);
+                                }
+
+                        } catch (EmptyStackException e) {}
+                        for (int i = 0; i < var.size(); i++) {
+                                acumuladorDatos = ( String ) var.elementAt(i);
+                                System.out.print(" "+acumuladorDatos);
+                        }
+                        System.out.println(";\u005cn<----------Fin-Return---------->\u005cn");
+                        DescargarPila();
+                        System.out.println("<-------------------->\u005cn");
+                        //while(!var.isEmpty()){ var.pop();}
+                }
+
   static final public void Inicio() throws ParseException {
     label_1:
     while (true) {
@@ -418,7 +448,7 @@
       case Res_int:
       case Res_void:
         fun_declaration();
-                                    cadena.push("Clase"); DescargarPilaCadena();
+
         break;
       default:
         jj_la1[1] = jj_gen;
@@ -478,10 +508,11 @@
 
 //---6
   static final public void fun_declaration() throws ParseException {
+                         String Temp="", Temp1="";
     type_specifier();
-                            cadena.push(token.image);
+                           Temp =token.image; cadena.push(Temp); tipoTemp = Temp;
     jj_consume_token(Id);
-               cadena.push(token.image);  cadena.push("Funcion"); cadena.push("1");
+              Temp1 = token.image; cadena.push(Temp1); IdTem = Temp1; cadena.push("Funcion"); cadena.push("1"); cadena.push("Clase"); DescargarPilaCadena();
     jj_consume_token(Op_Parentesis_Izq);
     params();
     jj_consume_token(Op_Parentesis_Der);
@@ -637,7 +668,7 @@
     case Id:
       expression();
       jj_consume_token(Op_Punto_Coma);
-                                      if(!var.isEmpty()){DescargarPila(); System.out.println("<--------->\u005cn");}
+                                      if(!var.isEmpty()){DescargarPila(); System.out.println("<-------------------->\u005cn");}
       break;
     case Op_Punto_Coma:
       jj_consume_token(Op_Punto_Coma);
@@ -654,7 +685,7 @@
     jj_consume_token(Res_if);
     jj_consume_token(Op_Parentesis_Izq);
     expression();
-                       DescargarPila(); System.out.println("<--------->"); System.out.println("");
+                       DescargarPila(); System.out.println("<-------------------->"); System.out.println("");
     jj_consume_token(Op_Parentesis_Der);
     statement();
     selection_stmt_P();
@@ -678,7 +709,7 @@
     jj_consume_token(Res_while);
     jj_consume_token(Op_Parentesis_Izq);
     expression();
-                       DescargarPila(); System.out.println("<--------->"); System.out.println("");
+                       DescargarPila(); System.out.println("<-------------------->"); System.out.println("");
     jj_consume_token(Op_Parentesis_Der);
     statement();
   }
@@ -700,6 +731,7 @@
     case Id:
       expression();
       jj_consume_token(Op_Punto_Coma);
+                                         FuncionesReturn();
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -716,7 +748,7 @@
       jj_consume_token(Op_Asignacion);
                           var.push(token.image);
       expression();
-                           DescargarPila(); System.out.println("<--------->\u005cn");
+                           DescargarPila(); System.out.println("<-------------------->\u005cn");
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case Op_Parentesis_Izq:
@@ -1067,105 +1099,6 @@
     try { return !jj_3_14(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(13, xla); }
-  }
-
-  static private boolean jj_3R_19() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_6()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_49() {
-    if (jj_scan_token(Res_while)) return true;
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_54() {
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_53() {
-    if (jj_3R_57()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_48() {
-    if (jj_scan_token(Res_if)) return true;
-    if (jj_scan_token(Op_Parentesis_Izq)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_47() {
-    if (jj_scan_token(Op_Llave_Izq)) return true;
-    if (jj_3R_53()) return true;
-    if (jj_3R_54()) return true;
-    if (jj_scan_token(Op_Llave_Der)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_46() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_52()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(30)) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_52() {
-    if (jj_3R_21()) return true;
-    if (jj_scan_token(Op_Punto_Coma)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_36() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_35() {
-    if (jj_3R_49()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_34() {
-    if (jj_3R_48()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_33() {
-    if (jj_3R_47()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_32() {
-    if (jj_3R_46()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_18() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_32()) {
-    jj_scanpos = xsp;
-    if (jj_3R_33()) {
-    jj_scanpos = xsp;
-    if (jj_3R_34()) {
-    jj_scanpos = xsp;
-    if (jj_3R_35()) {
-    jj_scanpos = xsp;
-    if (jj_3R_36()) return true;
-    }
-    }
-    }
-    }
-    return false;
   }
 
   static private boolean jj_3_5() {
@@ -1546,6 +1479,105 @@
   static private boolean jj_3_6() {
     if (jj_3R_18()) return true;
     if (jj_3R_19()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_6()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_49() {
+    if (jj_scan_token(Res_while)) return true;
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_54() {
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_53() {
+    if (jj_3R_57()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_48() {
+    if (jj_scan_token(Res_if)) return true;
+    if (jj_scan_token(Op_Parentesis_Izq)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_47() {
+    if (jj_scan_token(Op_Llave_Izq)) return true;
+    if (jj_3R_53()) return true;
+    if (jj_3R_54()) return true;
+    if (jj_scan_token(Op_Llave_Der)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_46() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_52()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(30)) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_52() {
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(Op_Punto_Coma)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_36() {
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_35() {
+    if (jj_3R_49()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_34() {
+    if (jj_3R_48()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_33() {
+    if (jj_3R_47()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_32() {
+    if (jj_3R_46()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_18() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_32()) {
+    jj_scanpos = xsp;
+    if (jj_3R_33()) {
+    jj_scanpos = xsp;
+    if (jj_3R_34()) {
+    jj_scanpos = xsp;
+    if (jj_3R_35()) {
+    jj_scanpos = xsp;
+    if (jj_3R_36()) return true;
+    }
+    }
+    }
+    }
     return false;
   }
 

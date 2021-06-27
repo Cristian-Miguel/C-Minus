@@ -1,0 +1,62 @@
+Encontre un comentario de muchas lineas
+Tipo = int	Id = gcd	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = u	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = v	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<-------------------->
+ v == 0;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+Id = gcd
+ gcd = u;
+<----------Fin-Return---------->
+
+
+<-------------------->
+ gcd = u;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+Id = gcd
+ gcd = gcd ( v , u - u / v * v );
+<----------Fin-Return---------->
+
+
+<-------------------->
+ gcd = gcd ( v , u - u / v * v );
+<-------------------->
+
+Encontre un comentario de muchas lineas
+Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = y	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<-------------------->
+ x = input ( );
+ No hay tortillas 
+**Error variable "input" no se encuentra declarada**
+<-------------------->
+
+
+<-------------------->
+ y = input ( );
+ No hay tortillas 
+**Error variable "input" no se encuentra declarada**
+<-------------------->
+
+
+<-------------------->
+ output ( gcd ( x , y ) );
+ No hay tortillas 
+**Error variable no declarada**
+<-------------------->
+
+hashtable valores: int  	x			Varible	null	1	Local
+hashtable valores: int  	v			Varible	null	1	Local
+hashtable valores: int  	u			Varible	null	1	Local
+hashtable valores: int  	gcd			Funcion	null	1	Clase
+hashtable valores: void  	main		Funcion	null	1	Clase
+hashtable valores: int  	y			Varible	null	1	Local

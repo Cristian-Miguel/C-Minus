@@ -1,5 +1,6 @@
 Encontre un comentario de muchas lineas
 Tipo = int	Id = x	Estructura = Arreglo	Valor = null	Tamano = 10	Posicion = Global
+Tipo = int	Id = minloc	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
 Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
 Tipo = int	Id = low	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = high	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
@@ -9,54 +10,60 @@ Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = x	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
-<------->
+<-------------------->
  k = low;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  x = a [ low ];
 **Error la variable x no es compatible**
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i = low + 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i < high;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  a [ i ] < x;
 **Error variable x no compatible**
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  x = a [ i ];
 **Error la variable x no es compatible**
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  k = i;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i = i + 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
-Tipo = int	Id = minloc	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+<----------Return---------->
+Return ->  tipo Especifico = int
+Id = minloc
+ minloc = k;
+<----------Fin-Return---------->
+
+
+<-------------------->
+ minloc = k;
+<-------------------->
+
+Tipo = void	Id = sort	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
 		----------------->  a == a  <-----------------
 		**Error variable "a" ya declarada**
 Tipo = int	Id = a	Estructura = Arreglo	Valor = null	Tamano = -	Posicion = Local
@@ -73,108 +80,95 @@ Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 		**Error variable "k" ya declarada**
 Tipo = int	Id = k	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
-<------->
+<-------------------->
  i = low;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i < high - 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
 Tipo = int	Id = t	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
-<------->
+<-------------------->
  k = minloc ( a , i , high );
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  t = a [ k ];
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  a [ k ] = a [ i ];
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  a [ i ] = t;
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i = i + 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
-Tipo = void	Id = sort	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
 		----------------->  i == i  <-----------------
 		**Error variable "i" ya declarada**
 Tipo = int	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
 
-<------->
+<-------------------->
  i = 0;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i < 10;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  x [ i ] = input ( );
  No hay tortillas 
 **Error variable "input" no se encuentra declarada**
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i = i + 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  sort ( x , 0 , 10 );
- No es Nulo Var
-**Error variable x no compatible**
-<--------->
+**Error variable "x" no compatible**
+<-------------------->
 
 
-<------->
+<-------------------->
  i = 0;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i < 10;
- No es Nulo Var
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  output ( x [ i ] );
  No hay tortillas 
 **Error variable no declarada**
-<--------->
+<-------------------->
 
 
-<------->
+<-------------------->
  i = i + 1;
- No es Nulo Var
-<--------->
+<-------------------->
 
-Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
 hashtable valores: int  	minloc			Funcion	null	1	Clase
 hashtable valores: void  	sort			Funcion	null	1	Clase
 hashtable valores: int  	low			Varible	null	1	Local

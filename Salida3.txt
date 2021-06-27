@@ -1,0 +1,116 @@
+Tipo = int	Id = gcd	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = u	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = v	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<-------------------->
+ v == 0;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+Id = gcd
+ gcd = u;
+<----------Fin-Return---------->
+
+
+<-------------------->
+ gcd = u;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+Id = gcd
+ gcd = gcd ( v , u - u / v * v );
+<----------Fin-Return---------->
+
+
+<-------------------->
+ gcd = gcd ( v , u - u / v * v );
+<-------------------->
+
+Tipo = real	Id = suma	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = real	Id = p	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<-------------------->
+ p == 0;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = real
+Id = suma
+ suma = p;
+<----------Fin-Return---------->
+
+
+<-------------------->
+ suma = p;
+<-------------------->
+
+<----------Return---------->
+Return ->  tipo Especifico = real
+Id = suma
+ suma = p + 8.5;
+<----------Fin-Return---------->
+
+
+<-------------------->
+ suma = p + 8.5;
+ No hay tortillas 
+**Error variable "8.5" no se encuentra declarada**
+<-------------------->
+
+Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = real	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = h	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = x	Estructura = Arreglo	Valor = null	Tamano = 10	Posicion = Local
+
+<-------------------->
+ i = 5;
+<-------------------->
+
+
+<-------------------->
+ i < 10;
+<-------------------->
+
+
+<-------------------->
+ i = i + 0.2 + 0.3 + 8.9;
+ No hay tortillas 
+**Error variable "0.2" no se encuentra declarada**
+<-------------------->
+
+
+<-------------------->
+ h = 9 / 3 * h + x [ 4 ];
+<-------------------->
+
+
+<-------------------->
+ x [ 6 ] = 8;
+<-------------------->
+
+
+<-------------------->
+ h = 7;
+<-------------------->
+
+
+<-------------------->
+ h = gcd ( 5 , 6 );
+<-------------------->
+
+
+<-------------------->
+ i = suma ( 9.3 );
+<-------------------->
+
+hashtable valores: real  	p			Varible	null	1	Local
+hashtable valores: real  	i			Varible	null	1	Local
+hashtable valores: int  	h			Varible	null	1	Local
+hashtable valores: void  	main			Funcion	null	1	Clase
+hashtable valores: int  	x			Arreglo	null	10	Local
+hashtable valores: int  	gcd			Funcion	null	1	Clase
+hashtable valores: int  	v			Varible	null	1	Local
+hashtable valores: int  	u			Varible	null	1	Local
+hashtable valores: real  	suma			Funcion	null	1	Clase
