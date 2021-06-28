@@ -128,6 +128,8 @@ PARSER_BEGIN(compilador)
 								int comparar = Integer.parseInt(valorGuardado[4]);
 								if(comparar < convertir ){
 									System.out.println("**Error de desbordamiento de arreglo**");	
+								}else{
+									BuscarError(valorGuardado[0], expresion, 5);
 								}
 
 							}
@@ -162,8 +164,8 @@ PARSER_BEGIN(compilador)
                 System.out.println("**Error variable \""+VarId+"\" no declarada**");
             }
 
-			while(!expresion.isEmpty()){ expresion.pop();}
-        	while(!var.isEmpty()){ var.pop();}
+			while(!expresion.isEmpty()){ expresion.pop(); }
+        	while(!var.isEmpty()){ var.pop(); }
 
 		}
 
@@ -227,7 +229,7 @@ PARSER_BEGIN(compilador)
 				try {
 
 					if(TipoEspecifico.equals("int")){
-
+				
 						int i = 0; boolean DatoFloat = false;
 						for (i = 0; i < base.length(); i++) {
 							char character = base.charAt(i);
@@ -238,6 +240,7 @@ PARSER_BEGIN(compilador)
 						}
 
 						if(DatoFloat){
+							System.out.println("**Error variable \""+base+"\" no es flotante**");
 							posicion = expresion.size();
 						}else{
 							int convertir = Integer.parseInt(base);

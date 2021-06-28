@@ -120,6 +120,8 @@
                                                                 int comparar = Integer.parseInt(valorGuardado[4]);
                                                                 if(comparar < convertir ){
                                                                         System.out.println("**Error de desbordamiento de arreglo**");
+                                                                }else{
+                                                                        BuscarError(valorGuardado[0], expresion, 5);
                                                                 }
 
                                                         }
@@ -154,8 +156,8 @@
                 System.out.println("**Error variable \u005c""+VarId+"\u005c" no declarada**");
             }
 
-                        while(!expresion.isEmpty()){ expresion.pop();}
-                while(!var.isEmpty()){ var.pop();}
+                        while(!expresion.isEmpty()){ expresion.pop(); }
+                while(!var.isEmpty()){ var.pop(); }
 
                 }
 
@@ -230,6 +232,7 @@
                                                 }
 
                                                 if(DatoFloat){
+                                                        System.out.println("**Error variable \u005c""+base+"\u005c" no es flotante**");
                                                         posicion = expresion.size();
                                                 }else{
                                                         int convertir = Integer.parseInt(base);

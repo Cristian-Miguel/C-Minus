@@ -86,18 +86,21 @@ Encontre un comentario de una linea
 
 <-------------------->
  h = 9 / 8.3 * i + x [ 4 ];
+**Error variable "8.3" no es flotante**
 <---------- Fin-Operacion ---------->
 
 Encontre un comentario de una linea
 
 <-------------------->
  x [ 6 ] = 8.9;
+**Error variable "8.9" no es flotante**
 <---------- Fin-Operacion ---------->
 
 Encontre un comentario de una linea
 
 <-------------------->
  h = 7.9;
+**Error variable "7.9" no es flotante**
 <---------- Fin-Operacion ---------->
 
 Encontre un comentario de una linea
