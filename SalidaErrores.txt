@@ -1,0 +1,143 @@
+Encontre un comentario de una linea
+Tipo = int	Id = gcd	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = int	Id = u	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = r	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Encontre un comentario de una linea
+
+<-------------------->
+ v == 0;
+ No hay tortillas 
+**Error variable "v" no declarada**
+<---------- Fin-Operacion ---------->
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+ gcd = u;
+
+<-------------------->
+ gcd = u;
+<-------------------->
+
+<----------Fin-Return---------->
+
+
+<----------Return---------->
+Return ->  tipo Especifico = int
+ gcd = gcd ( v , u - u / v * v );
+
+<-------------------->
+ gcd = gcd ( v , u - u / v * v );
+<-------------------->
+
+<----------Fin-Return---------->
+
+
+Tipo = real	Id = suma	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = real	Id = p	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+
+<-------------------->
+ p == 0;
+<---------- Fin-Operacion ---------->
+
+<----------Return---------->
+Return ->  tipo Especifico = real
+ suma = p;
+
+<-------------------->
+ suma = p;
+<-------------------->
+
+<----------Fin-Return---------->
+
+
+<----------Return---------->
+Return ->  tipo Especifico = real
+ suma = p + 8.5;
+
+<-------------------->
+ suma = p + 8.5;
+<-------------------->
+
+<----------Fin-Return---------->
+
+
+Tipo = void	Id = main	Estructura = Funcion	Valor = null	Tamano = 1	Posicion = Clase
+Tipo = real	Id = i	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = h	Estructura = Varible	Valor = null	Tamano = 1	Posicion = Local
+Tipo = int	Id = x	Estructura = Arreglo	Valor = null	Tamano = 10	Posicion = Local
+
+<-------------------->
+ i = 5;
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ i < 10;
+<---------- Fin-Operacion ---------->
+
+
+<-------------------->
+ i = h + 0.2 + 3 + 8.9;
+**Error variable "h" no compatible**
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ h = 9 / 8.3 * i + x [ 4 ];
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ x [ 6 ] = 8.9;
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ h = 7.9;
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ i = gcd ( 5 , 6 );
+**Error variable "gcd" no compatible**
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ h = suma ( 9.3 );
+**Error variable "suma" no compatible**
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ x [ 14 ] = 8;
+**Error de desbordamiento de arreglo**
+<---------- Fin-Operacion ---------->
+
+Encontre un comentario de una linea
+
+<-------------------->
+ h = gcd ( 5 );
+<---------- Fin-Operacion ---------->
+
+
+<-------------------->
+ i = suma ( 9.3 , 5.6 );
+<---------- Fin-Operacion ---------->
+
+hashtable valores: int	r 			Varible	null	1	Local
+hashtable valores: real	p 			Varible	null	1	Local
+hashtable valores: real	i 			Varible	null	1	Local
+hashtable valores: int	h 			Varible	null	1	Local
+hashtable valores: void	main 			Funcion	null	1	Clase
+hashtable valores: int	x 			Arreglo	null	10	Local
+hashtable valores: int	gcd 			Funcion	null	1	Clase
+hashtable valores: int	u 			Varible	null	1	Local
+hashtable valores: real	suma 			Funcion	null	1	Clase
